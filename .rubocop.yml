@@ -36,6 +36,7 @@ Metrics/BlockLength:
     - spec/**/*.rb
     - config/environments/*.rb
     - lib/tasks/auto_annotate_models.rake
+    - Guardfile
 
 Lint/NonDeterministicRequireOrder:
   Exclude:
@@ -44,3 +45,7 @@ Lint/NonDeterministicRequireOrder:
 Layout/HashAlignment:
   Exclude:
     - lib/tasks/auto_annotate_models.rake
+
+Rails/Date:
+  Exclude:
+    - db/seeds.rb

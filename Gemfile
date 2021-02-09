@@ -7,6 +7,7 @@ ruby '2.7.2'
 
 gem 'amazing_print', '~> 1.2', '>= 1.2.2'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'faker', '~> 2.15', '>= 2.15.1'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
@@ -26,8 +27,8 @@ group :development do
   gem 'annotate', '~> 3.1', '>= 3.1.1'
   gem 'bullet', '~> 6.1', '>= 6.1.3'
   gem 'guard', '~> 2.16', '>= 2.16.2'
-  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'guard-livereload', '~> 2.5', '>= 2.5.2', require: false
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'listen', '~> 3.3'
   gem 'rack-livereload', '~> 0.3.17'
   gem 'rack-mini-profiler', '~> 2.0'
