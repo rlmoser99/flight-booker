@@ -12,7 +12,7 @@
 #
 FactoryBot.define do
   factory :airport do
-    code { "MyString" }
-    location { "MyString" }
+    code { "TOP" }
+    location { "Springfield, US" }
   end
 end

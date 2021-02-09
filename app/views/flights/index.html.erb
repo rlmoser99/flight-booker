@@ -1,1 +1,47 @@
 <h1>Flight Index</h1>
+
+<%= form_with url: "/flights", method: :get do |f| %>
+
+  <div>
+    <%= f.label :origin_id %><br />
+    <%= f.select(:origin_id, @airport_options, required: true) %>
+  </div>
+
+  <div>
+    <%= f.label :destination_id %><br />
+    <%= f.select(:destination_id, @airport_options, required: true) %>
+  </div>
+
+  <div>
+    <%= f.label "Number of Passengers" %><br />
+    <%= f.select :number, [1, 2, 3, 4], required: true %>
+  </div>
+
+  <div>
+    <%= f.label "Date" %><br />
+    <%= f.date_field :departure_date,
+                      required: true,
+                      placeholder: "dd/mm/yyyy" %>
+  </div>
+
+  <div>
+    <%= f.submit "Find Flights" %>
+  </div>
+<% end %>
+
+<% if @available_flights %>
+  <div class="flight-results">
+    <h2>Available Flights:</h2>
+    <% @available_flights.each do |flight| %>
+      <div>
+        <p>
+          <%= flight.origin_airport.location %>
+          to
+          <%= flight.destination_airport.location %>
+          at
+          <%= flight.departure_time.strftime("%l:%M %P")%>
+        </p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

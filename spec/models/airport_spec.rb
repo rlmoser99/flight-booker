@@ -12,6 +12,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe Airport, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
+# RSpec.describe Airport, type: :model do
+#   pending "add some examples to (or delete) #{__FILE__}"
+# end
