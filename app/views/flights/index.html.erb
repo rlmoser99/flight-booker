@@ -4,22 +4,29 @@
 
   <div>
     <%= f.label :origin_id %><br />
-    <%= f.select(:origin_id, @airport_options, required: true) %>
+    <%= f.select(:origin_id,
+                 options_for_select(@airport_options, params[:origin_id]),
+                 required: true ) %>
   </div>
 
   <div>
     <%= f.label :destination_id %><br />
-    <%= f.select(:destination_id, @airport_options, required: true) %>
+    <%= f.select(:destination_id,
+                 options_for_select(@airport_options, params[:destination_id]),
+                 required: true ) %>
   </div>
 
   <div>
     <%= f.label "Number of Passengers" %><br />
-    <%= f.select :number, [1, 2, 3, 4], required: true %>
+    <%= f.select(:number,
+                 options_for_select([1, 2, 3, 4], params[:number]),
+                 required: true ) %>
   </div>
 
   <div>
     <%= f.label "Date" %><br />
     <%= f.date_field :departure_date,
+                      value: params[:departure_date],
                       required: true,
                       placeholder: "dd/mm/yyyy" %>
   </div>
