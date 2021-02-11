@@ -20,6 +20,8 @@ class Flight < ApplicationRecord
   belongs_to :destination_airport, class_name: "Airport",
                                    foreign_key: :destination_id,
                                    inverse_of: :arriving_flights
+  has_many :bookings, dependent: :destroy
+  has_many :passengers, through: :bookings
 
   def details
     time = departure_time.strftime('%l:%M %P')

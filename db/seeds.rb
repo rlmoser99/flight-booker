@@ -14,7 +14,7 @@ def evening_time
 end
 
 def random_duration
-  rand(75..225)
+  rand(75..175)
 end
 
 airports = [
@@ -40,7 +40,7 @@ finish = Time.zone.today + 1.week
                    destination_airport: airport_pair[1],
                    departure_date: date,
                    departure_time: morning_time,
-                   duration: flight_duration)
+                   duration: flight_duration + 5)
 
     Flight.create!(origin_airport: airport_pair[0],
                    destination_airport: airport_pair[1],
@@ -52,6 +52,14 @@ finish = Time.zone.today + 1.week
                    destination_airport: airport_pair[1],
                    departure_date: date,
                    departure_time: evening_time,
-                   duration: flight_duration)
+                   duration: flight_duration - 7)
   end
 end
+
+passengers = [
+  Passenger.create!(name: "Amelia Earhart", email: "amelia@earhart.com"),
+  Passenger.create!(name: "Maude Bonney", email: "maude@bonney.com")
+]
+
+Booking.create!(flight: Flight.first, passenger: passengers[0])
+Booking.create!(flight: Flight.last, passenger: passengers[1])
