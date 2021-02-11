@@ -39,16 +39,14 @@
 <% if @available_flights %>
   <div class="flight-results">
     <h2>Available Flights:</h2>
-    <% @available_flights.each do |flight| %>
-      <div>
-        <p>
-          <%= flight.origin_airport.location %>
-          to
-          <%= flight.destination_airport.location %>
-          at
-          <%= flight.departure_time.strftime("%l:%M %P")%>
-        </p>
-      </div>
+    <%= form_with model: Booking.new, method: :get  do |f| %>
+        <%= f.collection_radio_buttons :flight_id, @available_flights, :id, :details do |option| %>
+          <p>
+            <%= option.radio_button %>
+            <%= option.label %>
+          </p>
+        <% end %>
+        <%= f.submit %>
     <% end %>
   </div>
 <% end %>

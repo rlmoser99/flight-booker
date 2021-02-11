@@ -20,4 +20,9 @@ class Flight < ApplicationRecord
   belongs_to :destination_airport, class_name: "Airport",
                                    foreign_key: :destination_id,
                                    inverse_of: :arriving_flights
+
+  def details
+    time = departure_time.strftime('%l:%M %P')
+    "#{time} - #{origin_airport.code} to #{destination_airport.code} for #{duration} minutes"
+  end
 end
