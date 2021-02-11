@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe "view available flights", type: :system do
   let(:tomorrow) { Time.zone.tomorrow }
-  let!(:chicago) { create(:airport, location: "Chicago, IL") }
-  let!(:new_york) { create(:airport, location: "New York, NY") }
-  let!(:atlanta) { create(:airport, location: "Atlanta, GA") }
+  let!(:chicago) { create(:airport, location: "Chicago, IL", code: "ORD") }
+  let!(:new_york) { create(:airport, location: "New York, NY", code: "NYC") }
+  let!(:atlanta) { create(:airport, location: "Atlanta, GA", code: "ATL") }
   let!(:chicago_to_newyork) do
     create(:flight, origin_airport: chicago, destination_airport: new_york, departure_date: tomorrow)
   end
@@ -23,8 +23,8 @@ RSpec.describe "view available flights", type: :system do
     click_on("Find Flights")
     within(".flight-results") do
       expect(page).to have_content("Available Flights")
-      expect(page).to have_content("New York, NY")
-      expect(page).not_to have_content("Atlanta, GA")
+      expect(page).to have_content("NYC")
+      expect(page).not_to have_content("ATL")
     end
   end
 end
