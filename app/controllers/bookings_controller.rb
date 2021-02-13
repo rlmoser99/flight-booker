@@ -2,19 +2,29 @@
 
 class BookingsController < ApplicationController
   def new
-    @available_flights = Flight.where(search_params).order(departure_time: :asc) unless search_params.empty?
-    @flight_number = params[:flight_id]
-    @number = params[:number]
+    @flight = Flight.find_by(id: params[:flight_id])
+    @booking = Booking.new(flight: @flight)
+    number = params[:number].to_i
+    number.times { @booking.passengers.build }
+  end
+
+  def create
+    @booking = Booking.new(booking_params)
+
+    if @booking.save
+      redirect_to @booking
+    else
+      render :new
+    end
+  end
+
+  def show
+    @booking = Booking.find_by(id: params[:id])
   end
 
   private
 
-    def search_params
-      params.permit(:origin_id, :destination_id, :departure_date)
-    end
-
-    # Will need to set up & use strong params
     def booking_params
-      params.require(:booking).permit(:flight_id, :number)
+      params.require(:booking).permit(:flight_id, passengers_attributes: %i[name email])
     end
 end

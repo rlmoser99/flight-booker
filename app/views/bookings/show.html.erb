@@ -1,0 +1,17 @@
+<h1>Bookings Show</h1>
+
+<div class="booking-results">
+  <p>
+    Booking:
+    <%= @booking.flight.origin_airport.location %>
+    to
+    <%= @booking.flight.destination_airport.location %>
+  </p>
+
+  <p>
+    Passengers:
+    <% @booking.passengers.each do |passenger|%>
+      <%= passenger.name %>
+    <% end %>
+  </p>
+</div>

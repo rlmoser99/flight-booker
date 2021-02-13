@@ -56,10 +56,10 @@ finish = Time.zone.today + 1.week
   end
 end
 
-passengers = [
-  Passenger.create!(name: "Amelia Earhart", email: "amelia@earhart.com"),
-  Passenger.create!(name: "Maude Bonney", email: "maude@bonney.com")
-]
+first_booking = Booking.new(flight: Flight.first)
+second_booking = Booking.new(flight: Flight.last)
 
-Booking.create!(flight: Flight.first, passenger: passengers[0])
-Booking.create!(flight: Flight.last, passenger: passengers[1])
+Passenger.create!(name: "Amelia Earhart", email: "amelia@earhart.com", booking: first_booking)
+Passenger.create!(name: "Maude Bonney", email: "maude@bonney.com", booking: first_booking)
+Passenger.create!(name: "Urmila K. Parekh", email: "urmila@parekh.com", booking: second_booking)
+Passenger.create!(name: "Hermelinda Urvina", email: "hermelinda@urvina.com", booking: second_booking)

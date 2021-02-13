@@ -9,6 +9,7 @@
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  booking_id :bigint
 #
 FactoryBot.define do
   factory :passenger do

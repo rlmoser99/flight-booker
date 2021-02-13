@@ -1,8 +1,29 @@
-<h1>Bookings New</h1>
+<h1>Booking</h1>
+<p>
+  Flight: <%= @flight.details %>
+</p>
 
-<p>
-  Flight Number: <%= @flight_number%>
-</p>
-<p>
-  Passenger Number: <%= @number %>
-</p>
+<h3>
+  Passenger Information:
+</h3>
+<%= form_with model: @booking, local: true do |form| %>
+  <%= form.hidden_field :flight_id, :value => params[:flight_id] %>
+
+    <%= form.fields_for :passengers do |passenger_form| %>
+      <div>
+        <%= passenger_form.label :name %><br />
+        <%= passenger_form.text_field :name,
+                          required: true,
+                          placeholder: "Jane Doe" %>
+      </div>
+
+      <div>
+        <%= passenger_form.label :email %><br />
+        <%= passenger_form.text_field :email,
+                          required: true,
+                          placeholder: "user@example.com" %>
+      </div>
+    <% end %>
+
+  <%= form.submit "Submit Booking" %>
+<% end %>
