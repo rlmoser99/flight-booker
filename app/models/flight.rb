@@ -24,7 +24,8 @@ class Flight < ApplicationRecord
   has_many :passengers, through: :bookings
 
   def details
-    time = departure_time.strftime('%l:%M %P')
-    "#{time} - #{origin_airport.code} to #{destination_airport.code} for #{duration} minutes"
+    depart = departure_time.strftime('%l:%M %p')
+    arrive = (departure_time + (duration.to_f / 60).hours).strftime('%l:%M %p')
+    "#{depart} departure from #{origin_airport.code}. Arriving to #{destination_airport.code} at #{arrive}."
   end
 end

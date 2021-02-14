@@ -36,6 +36,18 @@
   </div>
 <% end %>
 
+<% if @connecting_flights %>
+  <h2>Connecting Flights:</h2>
+  <% @connecting_flights.each do |connection| %>
+    <p>
+      <strong>From: </strong>
+      <%= connection[0].details %>
+      <strong> To: </strong>
+      <%= connection[1].details %>
+    </p>
+  <% end %>
+<% end %>
+
 <% if @available_flights %>
   <div class="flight-results">
     <h2>Available Flights:</h2>

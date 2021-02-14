@@ -26,7 +26,7 @@ RSpec.describe "view available flights", type: :system do
       expect(page).to have_content("NYC")
       expect(page).not_to have_content("ATL")
     end
-    choose('5:08 pm - ORD to NYC for 1 minutes')
+    choose('5:08 PM departure from ORD. Arriving to NYC at 5:09 PM')
     click_on("Book Flight")
     fill_in("booking_passengers_attributes_0_name", with: "Example One")
     fill_in("booking_passengers_attributes_0_email", with: "one@example.com")
