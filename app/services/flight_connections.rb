@@ -2,69 +2,63 @@
 
 class FlightConnections
   def initialize(params)
-    @origin = params["origin_id"]
-    @destination = params["destination_id"]
+    @origin = params["origin_id"].to_i
+    @destination = params["destination_id"].to_i
     @date = params["departure_date"]
   end
 
-  def find_connections
-    return if connecting_location? || close_location?
+  def find_connecting_flights
+    return if layover_location? || direct_flight_locations?
 
-    first_leg = connecting_codes.collect { |code| find_first_leg(code) }
-    all_connections = []
-    first_leg.flatten(1).each do |leg|
+    first_leg_possibilities = layover_codes.collect { |code| find_first_leg(code) }.flatten(1)
+    first_leg_possibilities.map do |first_leg|
+      find_connecting_possibilities(first_leg)
+    end.compact
+  end
+
+  private
+
+    def find_connecting_possibilities(leg)
       options = find_second_leg(leg)
       layover_start = leg.departure_time + (leg.duration.to_f / 60).hours + 1.hour
       layover_end = layover_start + 2.hours
-      connecting_flights = [leg]
-      options.each do |flight|
-        connecting_flights << flight if flight.departure_time.between?(layover_start, layover_end)
+      second_leg = options.select do |flight|
+        flight.departure_time.between?(layover_start, layover_end)
       end
-      all_connections << connecting_flights if connecting_flights.length > 1
+      [leg, second_leg.first] unless second_leg.empty?
     end
-    all_connections
-  end
 
-  def find_first_leg(code)
-    flight_options = Flight.where({ "origin_id" => @origin,
-                                    "destination_id" => code,
-                                    "departure_date" => @date })
-    flight_options.to_a
-  end
+    def find_first_leg(code)
+      flight_options = Flight.where({ "origin_id" => @origin,
+                                      "destination_id" => code,
+                                      "departure_date" => @date })
+      flight_options.to_a
+    end
 
-  def find_second_leg(first_leg)
-    flight_options = Flight.where({ "origin_id" => first_leg.destination_id,
-                                    "destination_id" => @destination,
-                                    "departure_date" => @date })
-    flight_options.to_a
-  end
+    def find_second_leg(first_leg)
+      flight_options = Flight.where({ "origin_id" => first_leg.destination_id,
+                                      "destination_id" => @destination,
+                                      "departure_date" => @date })
+      flight_options.to_a
+    end
 
-  def connecting_location?
-    origin_airport = Airport.find_by(id: @origin).location
-    destination_airport = Airport.find_by(id: @destination).location
-    connecting_airports.include?(origin_airport) || connecting_airports.include?(destination_airport)
-  end
+    def layover_location?
+      layover_codes.include?(@origin) || layover_codes.include?(@destination)
+    end
 
-  def close_location?
-    origin_airport = Airport.find_by(id: @origin).location
-    destination_airport = Airport.find_by(id: @destination).location
-    close_airports.any? { |pair| pair == [origin_airport, destination_airport] }
-  end
+    # Airport ID's for Atlanta, Chicago, Dallas, and Denver
+    def layover_codes
+      [3, 4, 6, 8]
+    end
 
-  def connecting_airports
-    ["Atlanta, GA", "Chicago, IL", "Dallas, TX", "Denver, CO"]
-  end
+    def direct_flight_locations?
+      direct_flight_codes.any? { |pair| pair == [@origin, @destination] }
+    end
 
-  def connecting_codes
-    [3, 4, 6, 8]
-  end
-
-  def close_airports
-    [
-      ["San Francisco, CA", "Los Angeles, CA"],
-      ["Los Angeles, CA", "San Francisco, CA"],
-      ["New York City, NY", "Orlando, FL"],
-      ["Orlando, FL", "New York City, NY"]
-    ]
-  end
+    # Flights to & from San Francisco/Los Angeles and New York City/Orlando
+    def direct_flight_codes
+      [
+        [1, 5], [5, 1], [2, 7], [7, 2]
+      ]
+    end
 end

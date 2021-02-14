@@ -8,45 +8,23 @@ RSpec.describe FlightConnections do
   let!(:atlanta) { create(:airport, id: 3, location: "Atlanta, GA", code: "ATL") }
   let!(:chicago) { create(:airport, id: 4, location: "Chicago, IL", code: "ORD") }
   let!(:los_angeles) { create(:airport, id: 5, location: "Los Angeles, CA", code: "LAX") }
-  let!(:dallas) { create(:airport, id: 6, location: "Dallas, TX", code: "DFW") }
-  let!(:orlando) { create(:airport, id: 7, location: "Orlando, FL", code: "MCO") }
-  let!(:denver) { create(:airport, id: 8, location: "Denver, CO", code: "DEN") }
 
   let(:tomorrow) { Time.zone.tomorrow }
   let(:morning_time) { Time.zone.parse("08:00 AM") }
-  let(:noon_time) { Time.zone.parse("12:00 PM") }
   let(:safe_layover_time) { Time.zone.parse("10:00 AM") }
   let(:past_layover_time) { Time.zone.parse("08:00 PM") }
 
-  let!(:morning_SFO_NYC) do
-    create(:flight, origin_airport: san_fran,
-                    destination_airport: new_york,
-                    departure_date: tomorrow,
-                    departure_time: morning_time)
-  end
   let!(:morning_SFO_ATL) do
     create(:flight, origin_airport: san_fran,
                     destination_airport: atlanta,
                     departure_date: tomorrow,
                     departure_time: morning_time)
   end
-  let!(:noon_SFO_ATL) do
-    create(:flight, origin_airport: san_fran,
-                    destination_airport: atlanta,
-                    departure_date: tomorrow,
-                    departure_time: noon_time)
-  end
   let!(:morning_SFO_ORD) do
     create(:flight, origin_airport: san_fran,
                     destination_airport: chicago,
                     departure_date: tomorrow,
                     departure_time: morning_time)
-  end
-  let!(:noon_SFO_ORD) do
-    create(:flight, origin_airport: san_fran,
-                    destination_airport: chicago,
-                    departure_date: tomorrow,
-                    departure_time: noon_time)
   end
   let!(:safe_ATL_NYC) do
     create(:flight, origin_airport: atlanta,
@@ -73,70 +51,59 @@ RSpec.describe FlightConnections do
                     departure_time: past_layover_time)
   end
 
-  let!(:connections) do
-    FlightConnections.new({ "origin_id" => "1", "destination_id" => "2", "departure_date" => tomorrow })
-  end
-  let!(:non_connection) do
-    FlightConnections.new({ "origin_id" => "1", "destination_id" => "3", "departure_date" => tomorrow })
-  end
-  let!(:close_connection) do
-    FlightConnections.new({ "origin_id" => "1", "destination_id" => "5", "departure_date" => tomorrow })
-  end
+  describe "#find_connecting_flights" do
+    context 'when connecting cross-country locations' do
+      let!(:cross_country_locations) do
+        FlightConnections.new({ "origin_id" => san_fran.id,
+                                "destination_id" => new_york.id,
+                                "departure_date" => tomorrow })
+      end
 
-  describe "#find_connections" do
-    context 'when connecting San Francisco to New York' do
-      it "returns two flights" do
+      it "returns two connecting flight options" do
         result = [[morning_SFO_ATL, safe_ATL_NYC], [morning_SFO_ORD, safe_ORD_NYC]]
-        expect(connections.find_connections).to match_array(result)
+        expect(cross_country_locations.find_connecting_flights).to match_array(result)
+      end
+
+      it "does not return flights options past layover window" do
+        result = [[morning_SFO_ATL, past_ATL_NYC], [morning_SFO_ORD, past_ORD_NYC]]
+        expect(cross_country_locations.find_connecting_flights).not_to include(result)
       end
     end
 
-    context 'when connecting San Francisco to Atlanta' do
+    context 'when the destination is a layover location' do
+      let!(:destination_layover) do
+        FlightConnections.new({ "origin_id" => san_fran.id,
+                                "destination_id" => atlanta.id,
+                                "departure_date" => tomorrow })
+      end
+
       it "returns nil" do
-        expect(non_connection.find_connections).to be nil
+        expect(destination_layover.find_connecting_flights).to be nil
       end
     end
 
-    context 'when connecting San Francisco to "Los Angeles' do
-      it "returns true" do
-        expect(close_connection.find_connections).to be nil
+    context 'when the origin is a layover location' do
+      let!(:origin_layover) do
+        FlightConnections.new({ "origin_id" => atlanta.id,
+                                "destination_id" => san_fran.id,
+                                "departure_date" => tomorrow })
       end
-    end
-  end
 
-  describe "#connecting_location?" do
-    context 'when connecting San Francisco to New York' do
-      it "returns false" do
-        expect(connections.connecting_location?).to be false
-      end
-    end
-
-    context 'when connecting San Francisco to Atlanta' do
-      it "returns true" do
-        expect(non_connection.connecting_location?).to be true
-      end
-    end
-  end
-
-  describe "#close_location??" do
-    context 'when connecting San Francisco to New York' do
-      it "returns false" do
-        expect(connections.close_location?).to be false
+      it "returns nil" do
+        expect(origin_layover.find_connecting_flights).to be nil
       end
     end
 
-    context 'when connecting San Francisco to "Los Angeles' do
-      it "returns true" do
-        expect(close_connection.close_location?).to be true
+    context 'when origin and destination are too close for layover' do
+      let!(:non_layover_locations) do
+        FlightConnections.new({ "origin_id" => san_fran.id,
+                                "destination_id" => los_angeles.id,
+                                "departure_date" => tomorrow })
+      end
+
+      it "returns nil" do
+        expect(non_layover_locations.find_connecting_flights).to be nil
       end
     end
   end
-
-  # describe "#connecting_codes" do
-  #   context 'when connecting San Francisco to New York' do
-  #     it "returns 4 airport code in an array" do
-  #       expect(connections.connecting_codes).to eq([3, 4, 6, 8])
-  #     end
-  #   end
-  # end
 end

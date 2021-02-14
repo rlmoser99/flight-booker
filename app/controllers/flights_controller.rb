@@ -6,7 +6,7 @@ class FlightsController < ApplicationController
     return if search_params.empty?
 
     @available_flights = Flight.where(search_params)
-    @connecting_flights = FlightConnections.new(search_params).find_connections
+    @connecting_flights = FlightConnections.new(search_params).find_connecting_flights
   end
 
   private
