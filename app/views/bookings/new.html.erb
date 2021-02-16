@@ -1,29 +1,50 @@
-<h1>Booking</h1>
-<p>
-  Flight: <%= @flight.details %>
-</p>
+<h1>Booking New Page</h1>
 
-<h3>
-  Passenger Information:
-</h3>
-<%= form_with model: @booking, local: true do |form| %>
-  <%= form.hidden_field :flight_id, :value => params[:flight_id] %>
+<%= form_with url: "/bookings/new", method: :get do |f| %>
+  <div>
+    <%= f.label "Origin" %><br />
+    <%= f.select(:origin_id,
+                 options_for_select(@airport_options, params[:origin_id]),
+                 required: true ) %>
+  </div>
 
-    <%= form.fields_for :passengers do |passenger_form| %>
-      <div>
-        <%= passenger_form.label :name %><br />
-        <%= passenger_form.text_field :name,
-                          required: true,
-                          placeholder: "Jane Doe" %>
-      </div>
+  <div>
+    <%= f.label "Destination" %><br />
+    <%= f.select(:destination_id,
+                 options_for_select(@airport_options, params[:destination_id]),
+                 required: true ) %>
+  </div>
 
-      <div>
-        <%= passenger_form.label :email %><br />
-        <%= passenger_form.text_field :email,
-                          required: true,
-                          placeholder: "user@example.com" %>
-      </div>
+  <div>
+    <%= f.label "Number of Passengers" %><br />
+    <%= f.select(:passenger_count,
+                 options_for_select([1, 2, 3, 4], params[:passenger_count]),
+                 required: true ) %>
+  </div>
+
+  <div>
+    <%= f.label "Date" %><br />
+    <%= f.date_field :departure_date,
+                      value: params[:departure_date],
+                      required: true,
+                      placeholder: "dd/mm/yyyy" %>
+  </div>
+
+  <div>
+    <%= f.submit "Find Flights" %>
+  </div>
+<% end %>
+
+<% if @booking_options %>
+  <div class="flight-results">
+    <h2>Available Flights:</h2>
+    <%= form_with url: "bookings/new/", method: "get", local: true do |f| %>
+      <% @booking_options.each do |booking| %>
+        <p>
+          <%= f.radio_button :name, booking %> <%= booking %><br />
+        </p>
+      <% end %>
+      <%= f.submit "Book Flight" %>
     <% end %>
-
-  <%= form.submit "Submit Booking" %>
+  </div>
 <% end %>

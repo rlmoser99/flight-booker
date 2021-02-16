@@ -59,6 +59,15 @@
           <%= option.label %>
         </p>
       <% end %>
+      <%# if @connecting_flights %>
+        <%# <h2>Connecting Flights:</h2> %>
+        <%#= f.collection_radio_buttons :connection_id, @connecting_flights, :id, :details do |option| %>
+          <%# <p> %>
+            <%#= option.radio_button %>
+            <%#= option.label %>
+          <%# </p> %>
+        <%# end %>
+      <%# end %>
       <%= f.submit "Book Flight" %>
     <% end %>
   </div>

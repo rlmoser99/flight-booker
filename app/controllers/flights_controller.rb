@@ -7,6 +7,7 @@ class FlightsController < ApplicationController
 
     @available_flights = Flight.where(search_params)
     @connecting_flights = FlightConnections.new(search_params).find_connecting_flights
+    # @booking_options =
   end
 
   private

@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
-class FlightConnections
+class BookingOptions
   def initialize(params)
     @origin = params["origin_id"].to_i
     @destination = params["destination_id"].to_i
     @date = params["departure_date"]
+  end
+
+  def find_flights
+    direct_flights = find_direct_flights.collect { |flight| [flight] }
+    direct_flights + find_connecting_flights
   end
 
   def find_connecting_flights
@@ -26,6 +31,12 @@ class FlightConnections
         flight.departure_time.between?(layover_start, layover_end)
       end
       [leg, second_leg.first] unless second_leg.empty?
+    end
+
+    def find_direct_flights
+      Flight.where({ "origin_id" => @origin,
+                     "destination_id" => @destination,
+                     "departure_date" => @date })
     end
 
     def find_first_leg(code)

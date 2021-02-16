@@ -12,5 +12,7 @@
 #  booking_id :bigint
 #
 class Passenger < ApplicationRecord
-  belongs_to :booking
+  has_many :tickets, dependent: :destroy
+  has_many :bookings, through: :tickets
+  has_many :flights, through: :tickets
 end
