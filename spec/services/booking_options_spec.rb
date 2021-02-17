@@ -85,7 +85,6 @@ RSpec.describe BookingOptions do
         ]
         expect(cross_country_locations.find_flights).to match_array(result)
       end
-      []
 
       it "does not return flights options past layover window" do
         result = [[morning_SFO_ATL, past_ATL_NYC], [morning_SFO_ORD, past_ORD_NYC]]

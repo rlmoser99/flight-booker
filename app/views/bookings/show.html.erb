@@ -2,10 +2,10 @@
 
 <div class="booking-results">
   <p>
-    Booking:
-    <%= @booking.flight.origin_airport.location %>
-    to
-    <%= @booking.flight.destination_airport.location %>
+    Flights:
+    <% @booking.seats.each do |seat|%>
+      <%= seat.flight.details %>
+    <% end %>
   </p>
 
   <p>

@@ -16,25 +16,21 @@ RSpec.describe "model associations" do
     create(:flight, origin_airport: chicago, destination_airport: new_york)
   end
 
-  # Passengers
-  let!(:anna) { create(:passenger) }
-  let!(:amy) { create(:passenger) }
-  let!(:joe) { create(:passenger) }
-
   # Booking
   let!(:anna_amy_booking) { create(:booking) }
   let!(:joe_booking) { create(:booking) }
 
-  # Tickets
-  let!(:anna_chicago_ticket) do
-    create(:ticket, booking: anna_amy_booking, passenger: anna, flight: san_fran_to_chicago)
-  end
-  let!(:anna_new_york_ticket) do
-    create(:ticket, booking: anna_amy_booking, passenger: anna, flight: chicago_to_new_york)
-  end
-  let!(:amy_chicago_ticket) { create(:ticket, booking: anna_amy_booking, passenger: amy, flight: san_fran_to_chicago) }
-  let!(:amy_new_york_ticket) { create(:ticket, booking: anna_amy_booking, passenger: amy, flight: chicago_to_new_york) }
-  let!(:joe_chicago_ticket) { create(:ticket, booking: joe_booking, passenger: joe, flight: san_fran_to_chicago) }
+  # Passengers
+  let!(:anna) { create(:passenger, booking: anna_amy_booking) }
+  let!(:amy) { create(:passenger, booking: anna_amy_booking) }
+  let!(:joe) { create(:passenger, booking: joe_booking) }
+
+  # Seat
+  let!(:anna_chicago_seat) { create(:seat, booking: anna_amy_booking, flight: san_fran_to_chicago) }
+  let!(:anna_new_york_seat) { create(:seat, booking: anna_amy_booking, flight: chicago_to_new_york) }
+  let!(:amy_chicago_seat) { create(:seat, booking: anna_amy_booking, flight: san_fran_to_chicago) }
+  let!(:amy_new_york_seat) { create(:seat, booking: anna_amy_booking, flight: chicago_to_new_york) }
+  let!(:joe_chicago_seat) { create(:seat, booking: joe_booking, flight: san_fran_to_chicago) }
 
   context 'airports' do
     it "include correct departing flights" do
@@ -55,18 +51,11 @@ RSpec.describe "model associations" do
       expect(joe.flights).to include(san_fran_to_chicago)
     end
 
-    it "includes correct tickets" do
-      expect(anna.tickets).to include(anna_chicago_ticket, anna_new_york_ticket)
-      expect(amy.tickets).to include(amy_chicago_ticket, amy_new_york_ticket)
-      expect(joe.tickets).to include(joe_chicago_ticket)
-      expect(joe.tickets).not_to include(amy_chicago_ticket)
-    end
-
     it "includes correct booking" do
-      expect(anna.bookings).to include(anna_amy_booking)
-      expect(amy.bookings).to include(anna_amy_booking)
-      expect(joe.bookings).to include(joe_booking)
-      expect(joe.bookings).not_to include(anna_amy_booking)
+      expect(anna.booking).to eq(anna_amy_booking)
+      expect(amy.booking).to eq(anna_amy_booking)
+      expect(joe.booking).to eq(joe_booking)
+      expect(joe.booking).not_to eq(anna_amy_booking)
     end
   end
 
@@ -84,29 +73,29 @@ RSpec.describe "model associations" do
     end
 
     it "knows passenger count" do
-      expect(anna_amy_booking.passengers.distinct.count).to eq(2)
+      expect(anna_amy_booking.passengers.count).to eq(2)
       expect(joe_booking.passengers.count).to eq(1)
     end
 
-    it "includes correct tickets" do
-      expect(anna_amy_booking.tickets).to include(anna_chicago_ticket, anna_new_york_ticket, amy_chicago_ticket,
-                                                  amy_new_york_ticket)
-      expect(joe_booking.tickets).to include(joe_chicago_ticket)
-      expect(joe_booking.tickets).not_to include(anna_chicago_ticket, anna_new_york_ticket, amy_chicago_ticket,
-                                                 amy_new_york_ticket)
+    it "includes correct seats" do
+      expect(anna_amy_booking.seats).to include(anna_chicago_seat, anna_new_york_seat, amy_chicago_seat,
+                                                amy_new_york_seat)
+      expect(joe_booking.seats).to include(joe_chicago_seat)
+      expect(joe_booking.seats).not_to include(anna_chicago_seat, anna_new_york_seat, amy_chicago_seat,
+                                               amy_new_york_seat)
     end
 
-    it "knows tickets count" do
-      expect(anna_amy_booking.tickets.count).to eq(4)
-      expect(joe_booking.tickets.count).to eq(1)
+    it "knows seat count" do
+      expect(anna_amy_booking.seats.count).to eq(4)
+      expect(joe_booking.seats.count).to eq(1)
     end
   end
 
   context "flights" do
-    it "includes correct tickets" do
-      expect(san_fran_to_chicago.tickets).to include(amy_chicago_ticket, amy_chicago_ticket, joe_chicago_ticket)
-      expect(chicago_to_new_york.tickets).to include(amy_new_york_ticket, anna_new_york_ticket)
-      expect(chicago_to_new_york.tickets).not_to include(joe_chicago_ticket)
+    it "includes correct seats" do
+      expect(san_fran_to_chicago.seats).to include(amy_chicago_seat, amy_chicago_seat, joe_chicago_seat)
+      expect(chicago_to_new_york.seats).to include(amy_new_york_seat, anna_new_york_seat)
+      expect(chicago_to_new_york.seats).not_to include(joe_chicago_seat)
     end
 
     it "includes correct passengers" do
@@ -122,32 +111,23 @@ RSpec.describe "model associations" do
     end
   end
 
-  context "tickets" do
-    it "have the correct passenger" do
-      expect(anna_chicago_ticket.passenger).to eq(anna)
-      expect(anna_new_york_ticket.passenger).to eq(anna)
-      expect(amy_chicago_ticket.passenger).to eq(amy)
-      expect(amy_new_york_ticket.passenger).to eq(amy)
-      expect(joe_chicago_ticket.passenger).to eq(joe)
-      expect(joe_chicago_ticket.passenger).not_to eq(anna)
-    end
-
+  context "seat" do
     it "have the correct flight" do
-      expect(anna_chicago_ticket.flight).to eq(san_fran_to_chicago)
-      expect(anna_new_york_ticket.flight).to eq(chicago_to_new_york)
-      expect(amy_chicago_ticket.flight).to eq(san_fran_to_chicago)
-      expect(amy_new_york_ticket.flight).to eq(chicago_to_new_york)
-      expect(joe_chicago_ticket.flight).to eq(san_fran_to_chicago)
-      expect(joe_chicago_ticket.flight).not_to eq(chicago_to_new_york)
+      expect(anna_chicago_seat.flight).to eq(san_fran_to_chicago)
+      expect(anna_new_york_seat.flight).to eq(chicago_to_new_york)
+      expect(amy_chicago_seat.flight).to eq(san_fran_to_chicago)
+      expect(amy_new_york_seat.flight).to eq(chicago_to_new_york)
+      expect(joe_chicago_seat.flight).to eq(san_fran_to_chicago)
+      expect(joe_chicago_seat.flight).not_to eq(chicago_to_new_york)
     end
 
     it "have the correct booking" do
-      expect(anna_chicago_ticket.booking).to eq(anna_amy_booking)
-      expect(anna_new_york_ticket.booking).to eq(anna_amy_booking)
-      expect(amy_chicago_ticket.booking).to eq(anna_amy_booking)
-      expect(amy_new_york_ticket.booking).to eq(anna_amy_booking)
-      expect(joe_chicago_ticket.booking).to eq(joe_booking)
-      expect(joe_chicago_ticket.booking).not_to eq(anna_amy_booking)
+      expect(anna_chicago_seat.booking).to eq(anna_amy_booking)
+      expect(anna_new_york_seat.booking).to eq(anna_amy_booking)
+      expect(amy_chicago_seat.booking).to eq(anna_amy_booking)
+      expect(amy_new_york_seat.booking).to eq(anna_amy_booking)
+      expect(joe_chicago_seat.booking).to eq(joe_booking)
+      expect(joe_chicago_seat.booking).not_to eq(anna_amy_booking)
     end
   end
 end

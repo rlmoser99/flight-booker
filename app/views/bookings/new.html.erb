@@ -1,26 +1,19 @@
 <h1>Booking New Page</h1>
 
-<p>
-  Passenger Count: <%= @passenger_count %>
-</p>
-<p>
-  Ticket Count: <%= @booking.tickets.count %>
-</p>
+<p><strong>Flight Info:</strong></p>
 <% @flights.each do |flight| %>
   <p>
-    Flight Info: <%= flight.details %>
+    <%= flight.details %>
   </p>
 <% end %>
 
 <h3>
   Passenger Information:
 </h3>
-<%= form_with url: "tickets/new/", method: "get", local: true do |f| %>
+<%= form_with model: @booking, local: true do |form| %>
+  <%= form.hidden_field :booking_option, :value => params[:booking_option] %>
 
-  <% @passenger_count.times do %>
-
-    <%= f.fields_for :passenger do |passenger_form| %>
-    <%= passenger_form.hidden_field :flight_id, :value => params[:booking_option][0] %>
+    <%= form.fields_for :passengers do |passenger_form| %>
       <div>
         <%= passenger_form.label :name %><br />
         <%= passenger_form.text_field :name,
@@ -34,8 +27,7 @@
                           required: true,
                           placeholder: "user@example.com" %>
       </div>
-
     <% end %>
-  <% end %>
-  <%= f.submit %>
+
+  <%= form.submit "Submit Booking" %>
 <% end %>

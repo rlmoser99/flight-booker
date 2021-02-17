@@ -11,9 +11,9 @@
 #  passenger_id :bigint
 #
 class Booking < ApplicationRecord
-  has_many :tickets, dependent: :destroy
-  has_many :passengers, through: :tickets
-  has_many :flights, through: :tickets
+  has_many :passengers, dependent: :destroy
+  has_many :seats, dependent: :destroy
+  has_many :flights, through: :seats
 
-  accepts_nested_attributes_for :tickets
+  accepts_nested_attributes_for :passengers
 end

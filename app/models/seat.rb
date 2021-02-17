@@ -2,16 +2,15 @@
 
 # == Schema Information
 #
-# Table name: passengers
+# Table name: seats
 #
 #  id         :bigint           not null, primary key
-#  email      :string
-#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  booking_id :bigint
+#  flight_id  :bigint
 #
-class Passenger < ApplicationRecord
+class Seat < ApplicationRecord
+  belongs_to :flight
   belongs_to :booking
-  has_many :flights, through: :booking
 end
