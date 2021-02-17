@@ -1,0 +1,17 @@
+<%= form_with model: @passenger, local: true do |form| %>
+  <div>
+    <%= form.label :name %><br />
+    <%= form.text_field :name,
+                      required: true,
+                      placeholder: "Jane Doe" %>
+  </div>
+
+  <div>
+    <%= form.label :email %><br />
+    <%= form.text_field :email,
+                      required: true,
+                      placeholder: "user@example.com" %>
+  </div>
+  
+  <%= form.submit %>
+<% end %>

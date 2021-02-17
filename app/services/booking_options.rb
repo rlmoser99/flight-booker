@@ -9,11 +9,13 @@ class BookingOptions
 
   def find_flights
     direct_flights = find_direct_flights.collect { |flight| [flight] }
+    return direct_flights if layover_location? || direct_flight_locations?
+
     direct_flights + find_connecting_flights
   end
 
   def find_connecting_flights
-    return if layover_location? || direct_flight_locations?
+    # return if layover_location? || direct_flight_locations?
 
     first_leg_possibilities = layover_codes.collect { |code| find_first_leg(code) }.flatten(1)
     first_leg_possibilities.map do |first_leg|

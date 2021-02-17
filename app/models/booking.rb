@@ -15,5 +15,5 @@ class Booking < ApplicationRecord
   has_many :passengers, through: :tickets
   has_many :flights, through: :tickets
 
-  # accepts_nested_attributes_for :passengers
+  accepts_nested_attributes_for :tickets
 end

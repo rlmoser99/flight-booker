@@ -1,13 +1,12 @@
-<h1>New Ticket Page (formerly Booking) </h1>
+<h1>New Ticket Page</h1>
 <p>
-  Flight: <%= @flight.details %>
+  Booking Count: <%= @booking_count %>
 </p>
 
 <h3>
   Passenger Information:
 </h3>
-<%= form_with model: @booking, local: true do |form| %>
-  <%= form.hidden_field :flight_id, :value => params[:flight_id] %>
+<%= form_with model: @ticket, local: true do |form| %>
 
     <%= form.fields_for :passengers do |passenger_form| %>
       <div>

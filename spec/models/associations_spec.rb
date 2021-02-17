@@ -83,12 +83,22 @@ RSpec.describe "model associations" do
       expect(joe_booking.flights).not_to include(chicago_to_new_york)
     end
 
+    it "knows passenger count" do
+      expect(anna_amy_booking.passengers.distinct.count).to eq(2)
+      expect(joe_booking.passengers.count).to eq(1)
+    end
+
     it "includes correct tickets" do
       expect(anna_amy_booking.tickets).to include(anna_chicago_ticket, anna_new_york_ticket, amy_chicago_ticket,
                                                   amy_new_york_ticket)
       expect(joe_booking.tickets).to include(joe_chicago_ticket)
       expect(joe_booking.tickets).not_to include(anna_chicago_ticket, anna_new_york_ticket, amy_chicago_ticket,
                                                  amy_new_york_ticket)
+    end
+
+    it "knows tickets count" do
+      expect(anna_amy_booking.tickets.count).to eq(4)
+      expect(joe_booking.tickets.count).to eq(1)
     end
   end
 

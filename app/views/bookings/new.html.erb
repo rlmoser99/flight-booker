@@ -1,50 +1,41 @@
 <h1>Booking New Page</h1>
 
-<%= form_with url: "/bookings/new", method: :get do |f| %>
-  <div>
-    <%= f.label "Origin" %><br />
-    <%= f.select(:origin_id,
-                 options_for_select(@airport_options, params[:origin_id]),
-                 required: true ) %>
-  </div>
-
-  <div>
-    <%= f.label "Destination" %><br />
-    <%= f.select(:destination_id,
-                 options_for_select(@airport_options, params[:destination_id]),
-                 required: true ) %>
-  </div>
-
-  <div>
-    <%= f.label "Number of Passengers" %><br />
-    <%= f.select(:passenger_count,
-                 options_for_select([1, 2, 3, 4], params[:passenger_count]),
-                 required: true ) %>
-  </div>
-
-  <div>
-    <%= f.label "Date" %><br />
-    <%= f.date_field :departure_date,
-                      value: params[:departure_date],
-                      required: true,
-                      placeholder: "dd/mm/yyyy" %>
-  </div>
-
-  <div>
-    <%= f.submit "Find Flights" %>
-  </div>
+<p>
+  Passenger Count: <%= @passenger_count %>
+</p>
+<p>
+  Ticket Count: <%= @booking.tickets.count %>
+</p>
+<% @flights.each do |flight| %>
+  <p>
+    Flight Info: <%= flight.details %>
+  </p>
 <% end %>
 
-<% if @booking_options %>
-  <div class="flight-results">
-    <h2>Available Flights:</h2>
-    <%= form_with url: "bookings/new/", method: "get", local: true do |f| %>
-      <% @booking_options.each do |booking| %>
-        <p>
-          <%= f.radio_button :name, booking %> <%= booking %><br />
-        </p>
-      <% end %>
-      <%= f.submit "Book Flight" %>
+<h3>
+  Passenger Information:
+</h3>
+<%= form_with url: "tickets/new/", method: "get", local: true do |f| %>
+
+  <% @passenger_count.times do %>
+
+    <%= f.fields_for :passenger do |passenger_form| %>
+    <%= passenger_form.hidden_field :flight_id, :value => params[:booking_option][0] %>
+      <div>
+        <%= passenger_form.label :name %><br />
+        <%= passenger_form.text_field :name,
+                          required: true,
+                          placeholder: "Jane Doe" %>
+      </div>
+
+      <div>
+        <%= passenger_form.label :email %><br />
+        <%= passenger_form.text_field :email,
+                          required: true,
+                          placeholder: "user@example.com" %>
+      </div>
+
     <% end %>
-  </div>
+  <% end %>
+  <%= f.submit %>
 <% end %>

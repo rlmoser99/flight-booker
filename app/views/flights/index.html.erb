@@ -1,16 +1,15 @@
 <h1>Flight Index</h1>
 
 <%= form_with url: "/flights", method: :get do |f| %>
-
   <div>
-    <%= f.label :origin_id %><br />
+    <%= f.label "Origin" %><br />
     <%= f.select(:origin_id,
                  options_for_select(@airport_options, params[:origin_id]),
                  required: true ) %>
   </div>
 
   <div>
-    <%= f.label :destination_id %><br />
+    <%= f.label "Destination" %><br />
     <%= f.select(:destination_id,
                  options_for_select(@airport_options, params[:destination_id]),
                  required: true ) %>
@@ -18,8 +17,8 @@
 
   <div>
     <%= f.label "Number of Passengers" %><br />
-    <%= f.select(:number,
-                 options_for_select([1, 2, 3, 4], params[:number]),
+    <%= f.select(:passenger_count,
+                 options_for_select([1, 2, 3, 4], params[:passenger_count]),
                  required: true ) %>
   </div>
 
@@ -36,39 +35,25 @@
   </div>
 <% end %>
 
-<% if @connecting_flights %>
-  <h2>Connecting Flights:</h2>
-  <% @connecting_flights.each do |connection| %>
-    <p>
-      <strong>From: </strong>
-      <%= connection[0].details %>
-      <strong> To: </strong>
-      <%= connection[1].details %>
-    </p>
-  <% end %>
-<% end %>
-
-<% if @available_flights %>
+<% if @booking_options %>
   <div class="flight-results">
     <h2>Available Flights:</h2>
     <%= form_with url: "bookings/new/", method: "get", local: true do |f| %>
-      <%= f.hidden_field :number, :value => params[:number] %>
-      <%= f.collection_radio_buttons :flight_id, @available_flights, :id, :details do |option| %>
+    <%#= form_with url: ":id/tickets/new/", method: "get", local: true do |f| %>
+    <%#= form_with model: @booking, method: "get", local: true do |f| %>
+      <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
+      <% @booking_options.each do |booking| %>
         <p>
-          <%= option.radio_button %>
-          <%= option.label %>
+          <% if booking[1] %>
+            <%= f.radio_button :booking_option, [booking[0].id, booking[1].id] %>
+            <%= booking[0].details %>
+            <strong>plus layover</strong> with <%= booking[1].details %>
+          <% else %>
+            <%= f.radio_button :booking_option, booking[0].id %> <%= booking[0].details %>
+          <% end %>
         </p>
       <% end %>
-      <%# if @connecting_flights %>
-        <%# <h2>Connecting Flights:</h2> %>
-        <%#= f.collection_radio_buttons :connection_id, @connecting_flights, :id, :details do |option| %>
-          <%# <p> %>
-            <%#= option.radio_button %>
-            <%#= option.label %>
-          <%# </p> %>
-        <%# end %>
-      <%# end %>
-      <%= f.submit "Book Flight" %>
+      <%= f.submit %>
     <% end %>
   </div>
 <% end %>

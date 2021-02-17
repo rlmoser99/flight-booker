@@ -27,6 +27,6 @@ class Flight < ApplicationRecord
   def details
     depart = departure_time.strftime('%l:%M %p')
     arrive = (departure_time + (duration.to_f / 60).hours).strftime('%l:%M %p')
-    "#{depart} departure from #{origin_airport.code}. Arriving to #{destination_airport.code} at #{arrive}."
+    "#{depart} departure from #{origin_airport.code} and arrive at #{arrive} to #{destination_airport.code}"
   end
 end
