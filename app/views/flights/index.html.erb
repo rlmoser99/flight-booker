@@ -39,8 +39,6 @@
   <div class="flight-results">
     <h2>Available Flights:</h2>
     <%= form_with url: "bookings/new/", method: "get", local: true do |f| %>
-    <%#= form_with url: ":id/tickets/new/", method: "get", local: true do |f| %>
-    <%#= form_with model: @booking, method: "get", local: true do |f| %>
       <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
       <% @booking_options.each do |booking| %>
         <p>
@@ -53,7 +51,7 @@
           <% end %>
         </p>
       <% end %>
-      <%= f.submit %>
+      <%= f.submit "Book Flight" %>
     <% end %>
   </div>
 <% end %>

@@ -10,10 +10,11 @@
 <h3>
   Passenger Information:
 </h3>
-<%= form_with model: @booking, local: true do |form| %>
-  <%= form.hidden_field :booking_option, :value => params[:booking_option] %>
+<%= form_with model: @booking, local: true do |f| %>
+  <%= f.hidden_field :booking_option, :value => params[:booking_option] %>
+  <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
 
-    <%= form.fields_for :passengers do |passenger_form| %>
+    <%= f.fields_for :passengers do |passenger_form| %>
       <div>
         <%= passenger_form.label :name %><br />
         <%= passenger_form.text_field :name,
@@ -29,5 +30,5 @@
       </div>
     <% end %>
 
-  <%= form.submit "Submit Booking" %>
+  <%= f.submit "Submit Booking" %>
 <% end %>

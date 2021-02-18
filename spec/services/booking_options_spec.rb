@@ -100,7 +100,7 @@ RSpec.describe BookingOptions do
       end
 
       it "returns nil" do
-        expect(destination_layover.find_connecting_flights).to be nil
+        expect(destination_layover.find_connecting_flights).to eq([])
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe BookingOptions do
       end
 
       it "returns nil" do
-        expect(origin_layover.find_connecting_flights).to be nil
+        expect(origin_layover.find_connecting_flights).to eq([])
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe BookingOptions do
       end
 
       it "returns nil" do
-        expect(non_layover_locations.find_connecting_flights).to be nil
+        expect(non_layover_locations.find_connecting_flights).to eq([])
       end
     end
   end
