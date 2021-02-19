@@ -18,6 +18,6 @@ RSpec.describe Passenger, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:booking) }
-    it { is_expected.to have_many(:flights) }
+    it { is_expected.to have_many(:flights).through(:booking) }
   end
 end

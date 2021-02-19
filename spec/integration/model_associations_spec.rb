@@ -16,7 +16,7 @@ RSpec.describe "model associations" do
     create(:flight, origin_airport: chicago, destination_airport: new_york)
   end
 
-  # Booking
+  # Bookings
   let!(:anna_amy_booking) { create(:booking) }
   let!(:joe_booking) { create(:booking) }
 
@@ -25,26 +25,26 @@ RSpec.describe "model associations" do
   let!(:amy) { create(:passenger, booking: anna_amy_booking) }
   let!(:joe) { create(:passenger, booking: joe_booking) }
 
-  # Seat
+  # Seats
   let!(:anna_chicago_seat) { create(:seat, booking: anna_amy_booking, flight: san_fran_to_chicago) }
   let!(:anna_new_york_seat) { create(:seat, booking: anna_amy_booking, flight: chicago_to_new_york) }
   let!(:amy_chicago_seat) { create(:seat, booking: anna_amy_booking, flight: san_fran_to_chicago) }
   let!(:amy_new_york_seat) { create(:seat, booking: anna_amy_booking, flight: chicago_to_new_york) }
   let!(:joe_chicago_seat) { create(:seat, booking: joe_booking, flight: san_fran_to_chicago) }
 
-  context 'airports' do
-    it "include correct departing flights" do
+  context 'airport' do
+    it "includes correct departing flights" do
       expect(san_fran.departing_flights).to include(san_fran_to_chicago)
       expect(chicago.departing_flights).to include(chicago_to_new_york)
     end
 
-    it "include correct arriving flights" do
+    it "includes correct arriving flights" do
       expect(chicago.arriving_flights).to include(san_fran_to_chicago)
       expect(new_york.arriving_flights).to include(chicago_to_new_york)
     end
   end
 
-  context 'passengers' do
+  context 'passenger' do
     it "includes correct flights" do
       expect(anna.flights).to include(san_fran_to_chicago, chicago_to_new_york)
       expect(amy.flights).to include(san_fran_to_chicago, chicago_to_new_york)
@@ -59,7 +59,7 @@ RSpec.describe "model associations" do
     end
   end
 
-  context "bookings" do
+  context "booking" do
     it "includes correct passengers" do
       expect(anna_amy_booking.passengers).to include(anna, amy)
       expect(anna_amy_booking.passengers).not_to include(joe)
@@ -91,7 +91,7 @@ RSpec.describe "model associations" do
     end
   end
 
-  context "flights" do
+  context "flight" do
     it "includes correct seats" do
       expect(san_fran_to_chicago.seats).to include(amy_chicago_seat, amy_chicago_seat, joe_chicago_seat)
       expect(chicago_to_new_york.seats).to include(amy_new_york_seat, anna_new_york_seat)

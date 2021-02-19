@@ -2,55 +2,51 @@
 
 class BookingOptions
   def initialize(params)
-    @origin = params["origin_id"].to_i
-    @destination = params["destination_id"].to_i
+    @origin = Airport.find_by(id: params[:origin_id])
+    @destination = Airport.find_by(id: params[:destination_id])
     @date = params["departure_date"]
   end
 
   def find_flights
-    direct_flights = find_direct_flights.collect { |flight| [flight] }
+    direct_flights = find_flight_options(@origin, @destination, @date).collect { |flight| [flight] }
     return direct_flights if layover_location? || direct_flight_locations?
 
     direct_flights + find_connecting_flights
   end
 
-  def find_connecting_flights
-    # return if layover_location? || direct_flight_locations?
-
-    first_leg_possibilities = layover_codes.collect { |code| find_first_leg(code) }.flatten(1)
-    first_leg_possibilities.map do |first_leg|
-      find_connecting_possibilities(first_leg)
-    end.compact
-  end
-
   private
 
-    def find_connecting_possibilities(leg)
-      options = find_second_leg(leg)
+    def find_connecting_flights
+      first_leg_options = layover_codes.collect do |code|
+        connecting_airport = Airport.where(code: code)
+        find_flight_options(@origin, connecting_airport, @date)
+      end.flatten(1).uniq
+      first_leg_options.map do |first_leg|
+        find_second_leg_options(first_leg)
+      end.compact
+    end
+
+    def find_second_leg_options(leg)
+      flight_options = find_flight_options(leg.destination_airport, @destination, @date)
       layover_start = leg.departure_time + (leg.duration.to_f / 60).hours + 1.hour
+      second_leg = find_flights_within_layover_time(flight_options, layover_start)
+      return unless second_leg
+
+      [leg, second_leg]
+    end
+
+    def find_flights_within_layover_time(options, layover_start)
       layover_end = layover_start + 2.hours
-      second_leg = options.select do |flight|
+      connecting_flight = options.select do |flight|
         flight.departure_time.between?(layover_start, layover_end)
       end
-      [leg, second_leg.first] unless second_leg.empty?
+      connecting_flight&.first
     end
 
-    def find_direct_flights
-      Flight.where({ "origin_id" => @origin,
-                     "destination_id" => @destination,
-                     "departure_date" => @date })
-    end
-
-    def find_first_leg(code)
-      Flight.where({ "origin_id" => @origin,
-                     "destination_id" => code,
-                     "departure_date" => @date })
-    end
-
-    def find_second_leg(first_leg)
-      Flight.where({ "origin_id" => first_leg.destination_id,
-                     "destination_id" => @destination,
-                     "departure_date" => @date })
+    def find_flight_options(origin, destination, date)
+      Flight.where({ "origin_id" => origin,
+                     "destination_id" => destination,
+                     "departure_date" => date })
     end
 
     def layover_location?
@@ -59,17 +55,17 @@ class BookingOptions
 
     # Airport ID's for Atlanta, Chicago, Dallas, and Denver
     def layover_codes
-      [3, 4, 6, 8]
+      %w[ATL ORD DFW DEN]
     end
 
     def direct_flight_locations?
-      direct_flight_codes.any? { |pair| pair == [@origin, @destination] }
+      direct_flight_codes.any? { |pair| pair == [@origin.code, @destination.code] }
     end
 
     # Flights to & from San Francisco/Los Angeles and New York City/Orlando
     def direct_flight_codes
-      [
-        [1, 5], [5, 1], [2, 7], [7, 2]
+      %w[
+        [SFO LAX] [LAX SFO] [NYC MCO] [MCO NYC]
       ]
     end
 end

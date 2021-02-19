@@ -16,9 +16,9 @@ RSpec.describe Booking, type: :model do
   subject(:booking) { described_class.new }
 
   describe 'associations' do
-    it { is_expected.to have_many(:passengers) }
-    it { is_expected.to have_many(:seats) }
-    it { is_expected.to have_many(:flights) }
-    it { should accept_nested_attributes_for(:passengers) }
+    it { is_expected.to have_many(:passengers).dependent(:destroy) }
+    it { is_expected.to have_many(:seats).dependent(:destroy) }
+    it { is_expected.to have_many(:flights).through(:seats) }
+    it { is_expected.to accept_nested_attributes_for(:passengers) }
   end
 end

@@ -66,17 +66,19 @@ RSpec.describe BookingOptions do
                     departure_time: past_layover_time)
   end
 
-  # Fix these tests to use the new method: #find_flights
+  describe "#find_flights" do
+    before do
+      allow(Airport).to receive(:find_by).and_return(san_fran, new_york)
+    end
 
-  describe "#find_connecting_flights" do
-    context 'when connecting cross-country locations' do
+    context 'when flying between two cross-country locations' do
       let!(:cross_country_locations) do
-        BookingOptions.new({ "origin_id" => san_fran.id,
-                             "destination_id" => new_york.id,
+        BookingOptions.new({ "origin_id" => 1,
+                             "destination_id" => 2,
                              "departure_date" => tomorrow })
       end
 
-      it "returns two connecting flight options" do
+      it "returns two direct and two connecting flight options" do
         result = [
           [morning_direct_flight],
           [evening_direct_flight],
@@ -86,59 +88,14 @@ RSpec.describe BookingOptions do
         expect(cross_country_locations.find_flights).to match_array(result)
       end
 
-      it "does not return flights options past layover window" do
-        result = [[morning_SFO_ATL, past_ATL_NYC], [morning_SFO_ORD, past_ORD_NYC]]
-        expect(cross_country_locations.find_connecting_flights).not_to include(result)
+      it "does not return connecting flight options past the layover window" do
+        past_layover_flight = [morning_SFO_ATL, past_ATL_NYC]
+        expect(cross_country_locations.find_flights).not_to include(past_layover_flight)
       end
     end
 
-    context 'when the destination is a layover location' do
-      let!(:destination_layover) do
-        BookingOptions.new({ "origin_id" => san_fran.id,
-                             "destination_id" => atlanta.id,
-                             "departure_date" => tomorrow })
-      end
-
-      it "returns nil" do
-        expect(destination_layover.find_connecting_flights).to eq([])
-      end
-    end
-
-    context 'when the origin is a layover location' do
-      let!(:origin_layover) do
-        BookingOptions.new({ "origin_id" => atlanta.id,
-                             "destination_id" => san_fran.id,
-                             "departure_date" => tomorrow })
-      end
-
-      it "returns nil" do
-        expect(origin_layover.find_connecting_flights).to eq([])
-      end
-    end
-
-    context 'when origin and destination are too close for layover' do
-      let!(:non_layover_locations) do
-        BookingOptions.new({ "origin_id" => san_fran.id,
-                             "destination_id" => los_angeles.id,
-                             "departure_date" => tomorrow })
-      end
-
-      it "returns nil" do
-        expect(non_layover_locations.find_connecting_flights).to eq([])
-      end
-    end
+    # Test when:
+    # 'when the destination is a layover location' or 'when the origin is a layover location'
+    # 'when origin and destination are too close for layover'
   end
-
-  # describe 'find_flights' do
-  #   let!(:cross_country_locations) do
-  #     BookingOptions.new({ "origin_id" => san_fran.id,
-  #                          "destination_id" => new_york.id,
-  #                          "departure_date" => tomorrow })
-  #   end
-
-  #   it "returns two flights" do
-  #     results = [[morning_direct_flight], [evening_direct_flight]]
-  #     expect(cross_country_locations.find_flights).to eq(results)
-  #   end
-  # end
 end

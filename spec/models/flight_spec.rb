@@ -21,8 +21,8 @@ RSpec.describe Flight, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:origin_airport) }
     it { is_expected.to belong_to(:destination_airport) }
-    it { is_expected.to have_many(:seats) }
-    it { is_expected.to have_many(:bookings) }
-    it { is_expected.to have_many(:passengers) }
+    it { is_expected.to have_many(:seats).dependent(:destroy) }
+    it { is_expected.to have_many(:bookings).through(:seats) }
+    it { is_expected.to have_many(:passengers).through(:bookings) }
   end
 end

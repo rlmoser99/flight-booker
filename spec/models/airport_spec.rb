@@ -16,7 +16,7 @@ RSpec.describe Airport, type: :model do
   subject(:airport) { described_class.new }
 
   describe 'associations' do
-    it { is_expected.to have_many(:arriving_flights) }
-    it { is_expected.to have_many(:departing_flights) }
+    it { is_expected.to have_many(:arriving_flights).dependent(:destroy) }
+    it { is_expected.to have_many(:departing_flights).dependent(:destroy) }
   end
 end
