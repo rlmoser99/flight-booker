@@ -12,6 +12,11 @@
 #
 require 'rails_helper'
 
-# RSpec.describe Airport, type: :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+RSpec.describe Airport, type: :model do
+  subject(:airport) { described_class.new }
+
+  describe 'associations' do
+    it { is_expected.to have_many(:arriving_flights) }
+    it { is_expected.to have_many(:departing_flights) }
+  end
+end

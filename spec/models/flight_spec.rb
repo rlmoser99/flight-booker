@@ -15,6 +15,14 @@
 #
 require 'rails_helper'
 
-# RSpec.describe Flight, type: :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+RSpec.describe Flight, type: :model do
+  subject(:flight) { described_class.new }
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:origin_airport) }
+    it { is_expected.to belong_to(:destination_airport) }
+    it { is_expected.to have_many(:seats) }
+    it { is_expected.to have_many(:bookings) }
+    it { is_expected.to have_many(:passengers) }
+  end
+end

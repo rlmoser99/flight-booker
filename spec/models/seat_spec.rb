@@ -12,6 +12,11 @@
 #
 require 'rails_helper'
 
-# RSpec.describe Seat, type: :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+RSpec.describe Seat, type: :model do
+  subject(:seat) { described_class.new }
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:flight) }
+    it { is_expected.to belong_to(:booking) }
+  end
+end
