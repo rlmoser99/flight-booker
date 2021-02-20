@@ -31,6 +31,10 @@ Style/BlockComments:
   Exclude:
     - spec/spec_helper.rb
 
+Layout/LineLength:
+  Exclude:
+    - spec/**/*.rb
+
 Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb

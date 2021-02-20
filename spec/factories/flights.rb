@@ -20,5 +20,25 @@ FactoryBot.define do
     departure_date { "2021-02-08" }
     departure_time { "2021-02-08 17:08:15" }
     duration { 1 }
+
+    trait :tomorrow do
+      departure_date { Time.zone.tomorrow }
+    end
+
+    trait :morning do
+      departure_time { Time.zone.parse("08:00 AM") }
+    end
+
+    trait :mid_morning do
+      departure_time { Time.zone.parse("10:00 AM") }
+    end
+
+    trait :night do
+      departure_time { Time.zone.parse("08:00 PM") }
+    end
+
+    factory :tomorrow_morning_flight, traits: %i[tomorrow morning]
+    factory :tomorrow_layover_flight, traits: %i[tomorrow mid_morning]
+    factory :tomorrow_night_flight, traits: %i[tomorrow night]
   end
 end
