@@ -11,10 +11,7 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(passenger_params)
     @flights = find_flights(params[:booking][:booking_option])
-    passenger_count = params[:booking][:passenger_count].to_i
-    passenger_count.times do
-      @flights.each { |flight| @booking.seats.build(flight: flight) }
-    end
+    create_booking_seats(@flights, params[:booking][:passenger_count].to_i)
 
     if @booking.save
       redirect_to @booking
@@ -29,19 +26,18 @@ class BookingsController < ApplicationController
 
   private
 
-    # currently unused!
-    def booking_params
-      params.require(:booking).permit(:passenger_count,
-                                      :booking_option,
-                                      passengers_attributes: %i[name email])
-    end
-
     def passenger_params
       params.require(:booking).permit(passengers_attributes: %i[name email])
     end
 
-    def find_flights(params)
-      flight_numbers = params.split
+    def find_flights(booking_option)
+      flight_numbers = booking_option.split
       flight_numbers.collect { |num| Flight.find_by(id: num) }
+    end
+
+    def create_booking_seats(flights, passenger_count)
+      passenger_count.times do
+        flights.each { |flight| @booking.seats.build(flight: flight) }
+      end
     end
 end
