@@ -14,6 +14,7 @@ class BookingsController < ApplicationController
     create_booking_seats(@flights, params[:booking][:passenger_count].to_i)
 
     if @booking.save
+      flash[:notice] = "Your booking was created!"
       redirect_to @booking
     else
       render :new
@@ -22,6 +23,10 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find_by(id: params[:id])
+    return if @booking
+
+    flash[:alert] = "Sorry, this booking does not exist."
+    redirect_to root_url
   end
 
   private

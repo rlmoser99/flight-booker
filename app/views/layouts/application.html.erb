@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <% if flash[:notice] || flash[:alert] %>
+      <%= render partial: 'layouts/flash' %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

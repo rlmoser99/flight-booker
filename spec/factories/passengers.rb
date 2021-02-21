@@ -13,7 +13,7 @@
 #
 FactoryBot.define do
   factory :passenger do
-    name { "MyString" }
-    email { "MyString" }
+    name { "User Name" }
+    email { "user@example.com" }
   end
 end
