@@ -50,7 +50,7 @@ class BookingOptions
     end
 
     def layover_location?
-      layover_codes.include?(@origin) || layover_codes.include?(@destination)
+      layover_codes.include?(@origin.code) || layover_codes.include?(@destination.code)
     end
 
     # Airport ID's for Atlanta, Chicago, Dallas, and Denver
@@ -64,8 +64,8 @@ class BookingOptions
 
     # Flights to & from San Francisco/Los Angeles and New York City/Orlando
     def direct_flight_codes
-      %w[
-        [SFO LAX] [LAX SFO] [NYC MCO] [MCO NYC]
+      [
+        %w[SFO LAX], %w[LAX SFO], %w[NYC MCO], %w[MCO NYC]
       ]
     end
 end
