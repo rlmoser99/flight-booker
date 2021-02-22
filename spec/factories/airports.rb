@@ -15,23 +15,23 @@ FactoryBot.define do
     code { "TOP" }
     location { "Springfield, US" }
 
-    trait :east_coast do
+    trait :new_york_city do
       code { "NYC" }
     end
 
-    trait :north_california do
+    trait :san_francisco do
       code { "SFO" }
     end
 
-    trait :south_california do
+    trait :los_angeles do
       code { "LAX" }
     end
 
-    trait :atlanta_layover do
+    trait :atlanta do
       code { "ATL" }
     end
 
-    trait :chicago_layover do
+    trait :chicago do
       code { "ORD" }
     end
   end

@@ -2,24 +2,20 @@
 
 require "rails_helper"
 
-RSpec.describe "view available flights", type: :system do
-  let(:tomorrow) { Time.zone.tomorrow }
-  let!(:chicago) { create(:airport, location: "Chicago, IL", code: "ORD") }
-  let!(:new_york) { create(:airport, location: "New York City, NY", code: "NYC") }
-  let!(:atlanta) { create(:airport, location: "Atlanta, GA", code: "ATL") }
-  let!(:chicago_to_newyork) do
-    create(:flight, id: 1, origin_airport: chicago, destination_airport: new_york, departure_date: tomorrow)
-  end
-  let!(:chicago_to_atlanta) do
-    create(:flight, id: 2, origin_airport: chicago, destination_airport: atlanta, departure_date: tomorrow)
-  end
+RSpec.describe "add booking", type: :system do
+  let!(:chicago) { create(:airport, :chicago, location: "Chicago, IL") }
+  let!(:new_york) { create(:airport, :new_york_city, location: "New York City, NY") }
+  let!(:atlanta) { create(:airport, :atlanta) }
 
-  it "allows a user to select flight options and create a booking" do
+  let!(:ORD_NYC) { create(:tomorrow_morning_flight, id: 1, origin_airport: chicago, destination_airport: new_york) }
+  let!(:ORD_ATL) { create(:tomorrow_morning_flight, id: 2, origin_airport: chicago, destination_airport: atlanta) }
+
+  it "allows a user to search flights, select a booking option, and create a booking" do
     visit "/"
     select("Chicago, IL", from: "origin_id")
     select("New York City, NY", from: "destination_id")
     select(2, from: "passenger_count")
-    fill_in("departure_date", with: tomorrow)
+    fill_in("departure_date", with: Time.zone.tomorrow)
     click_on("Find Flights")
     within(".flight-results") do
       expect(page).to have_content("Available Flights")

@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe BookingOptions do
-  let(:san_fran) { create(:airport, :north_california) }
-  let(:new_york) { create(:airport, :east_coast) }
-  let(:atlanta) { create(:airport, :atlanta_layover) }
-  let(:chicago) { create(:airport, :chicago_layover) }
+  let(:san_fran) { create(:airport, :san_francisco) }
+  let(:new_york) { create(:airport, :new_york_city) }
+  let(:atlanta) { create(:airport, :atlanta) }
+  let(:chicago) { create(:airport, :chicago) }
 
   # 2 direct flights SFO to NYC
   let(:morning_SFO_NYC) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: new_york) }
@@ -91,7 +91,7 @@ RSpec.describe BookingOptions do
     end
 
     context 'when origin and destination are too close for layover' do
-      let(:los_angeles) { create(:airport, :south_california) }
+      let(:los_angeles) { create(:airport, :los_angeles) }
 
       # 2 direct flights SFO to LAX
       let(:morning_SFO_LAX) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: los_angeles) }
