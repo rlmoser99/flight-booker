@@ -15,33 +15,61 @@
  */
 
 :root {
-  --main-dark-blue-color: #2a2a72;
+  --main-dark-blue-color: #0047AB;
   --main-font-family: Helvetica, sans-serif;
 }
 
 html {
+  margin: 0;
+  padding: 0;
   height: -webkit-fill-available;
+  width: 100vw;
+  font-size: 16px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
-  align-items: flex-start;
+  align-items: center;
   background-attachment:fixed;
-  background-color: var(--main-dark-blue-color);
-  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+  background-color: #2a2a72;
+  background-image: linear-gradient(315deg, #2a2a72 0%, #0098f0 74%);
   color: #333;
   display: flex;
+  flex-direction: column;
   font-family: var(--main-font-family);
-  justify-content: center;
+  justify-content: flex-start;
+  margin: 0;
   min-height: 100vh;
   min-height: -webkit-fill-available;
-  padding: 15px;
   > * { flex: 0 1 auto; }
 }
 
 main {
   background-color: #f1f1f1;
-  border-radius: 15px;
+  border-radius: 10px;
   height: auto;
   padding-top: 15px;
+  margin: 15px 0;
   width: 75%;
+}
+
+.flash-message {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.notice {
+  background-color: var(--main-dark-blue-color);
+}
+
+.alert {
+  background-color: #ce0000;
 }

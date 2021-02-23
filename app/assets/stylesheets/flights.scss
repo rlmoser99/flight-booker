@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.flight-search {
+.flight-container {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -16,7 +16,7 @@
 .form-field select,
 .form-field input {
   width: 100%;
-  padding: 3px 0;
+  padding: 3px;
   font-family: var(--main-font-family);
 }
 

@@ -1,17 +1,17 @@
-<h1>Bookings Show</h1>
-
-<div class="booking-results">
-  <p><strong>Flights:</strong></p>
-  <% @booking.flights.distinct.each do |flight| %>
-    <p>
-      <%= flight.details %>
-    </p>
-  <% end %>
-  <br />
-  <p><strong>Passengers:</strong></p>
-  <% @booking.passengers.each do |passenger| %>
-    <p>
-      <%= passenger.name %>
-    </p>
-  <% end %>
+<div class="booking-container">
+  <div class="booking-results">
+    <p><strong>Flights:</strong></p>
+    <% @booking.flights.distinct.each do |flight| %>
+      <p>
+        <%= flight.details %>
+      </p>
+    <% end %>
+    <br />
+    <p><strong>Passengers:</strong></p>
+    <% @booking.passengers.each do |passenger| %>
+      <p>
+        <%= passenger.name %>
+      </p>
+    <% end %>
+  </div>
 </div>

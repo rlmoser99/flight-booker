@@ -1,13 +1,11 @@
-<h1>Booking New Page</h1>
-
-<p><strong>Flight Info:</strong></p>
-<% @flights.each do |flight| %>
-  <p>
-    <%= flight.details %>
-  </p>
-<% end %>
-
-<h3>
-  Passenger Information:
-</h3>
-<%= render partial: 'form' %>
+<div class="booking-container">
+  <p><strong>Flight Info:</strong></p>
+  <% @flights.each do |flight| %>
+    <p>
+      <%= flight.details %>
+    </p>
+  <% end %>
+  <br />
+  <p><strong>Add Passenger Information:</strong></p>
+  <%= render partial: 'form' %>
+</div>

@@ -16,14 +16,14 @@
   <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
 
   <%= f.fields_for :passengers do |passenger_form| %>
-    <div>
+    <div class="form-field">
       <%= passenger_form.label :name %><br />
       <%= passenger_form.text_field :name,
                         required: true,
                         placeholder: "Jane Doe" %>
     </div>
 
-    <div>
+    <div class="form-field">
       <%= passenger_form.label :email %><br />
       <%= passenger_form.text_field :email,
                         required: true,
@@ -31,5 +31,7 @@
     </div>
   <% end %>
 
-  <%= f.submit "Submit Booking" %>
+  <div class="form-button">
+    <%= f.submit "Submit Booking" %>
+  </div>
 <% end %>
