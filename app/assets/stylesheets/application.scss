@@ -14,6 +14,11 @@
  *= require_self
  */
 
+:root {
+  --main-dark-blue-color: #2a2a72;
+  --main-font-family: Helvetica, sans-serif;
+}
+
 html {
   height: -webkit-fill-available;
 }
@@ -21,11 +26,11 @@ html {
 body {
   align-items: flex-start;
   background-attachment:fixed;
-  background-color: #2a2a72;
+  background-color: var(--main-dark-blue-color);
   background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
   color: #333;
   display: flex;
-  font-family: Helvetica, sans-serif;
+  font-family: var(--main-font-family);
   justify-content: center;
   min-height: 100vh;
   min-height: -webkit-fill-available;

@@ -2,19 +2,25 @@
 
   <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
 
-  <% @booking_options.each do |booking| %>
-    <p>
-      <%= f.radio_button :booking_option, booking.map(&:id), { required: true } %>
-      <%= f.label(:booking_option, {for: "booking_option_#{booking.map(&:id).join("_")}"}) do %>
-        <% booking.each_with_index do |flight, index| %>
-          <% if index.positive? %>
-            <strong>plus layover</strong> with
+  <div class="radio-button-container">
+    <% @booking_options.each do |booking| %>
+      <div class="radio-button">
+        <%= f.radio_button :booking_option, booking.map(&:id), { required: true } %>
+      </div>
+      <div class="button-label">
+        <%= f.label(:booking_option, {for: "booking_option_#{booking.map(&:id).join("_")}"}) do %>
+          <% booking.each_with_index do |flight, index| %>
+            <% if index.positive? %>
+              <strong>plus layover</strong> with
+            <% end %>
+            <%= flight.details %>
           <% end %>
-          <%= flight.details %>
         <% end %>
-      <% end %>
-    </p>
-  <% end %>
+      </div>
+    <% end %>
+  </div>
 
-  <%= f.submit "Book Flight" %>
+  <div class="form-button">
+    <%= f.submit "Book Flight" %>
+  </div>
 <% end %>

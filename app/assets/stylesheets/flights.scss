@@ -3,5 +3,40 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .flight-search {
+  display: flex;
+  flex-direction: column;
   padding: 30px;
+  > * { flex: 0 1 auto; }
+}
+
+.form-field {
+  padding-bottom: 15px;
+}
+
+.form-field select,
+.form-field input {
+  width: 100%;
+  padding: 3px 0;
+  font-family: var(--main-font-family);
+}
+
+.form-button input {
+  width: 100%;
+  background-color: var(--main-dark-blue-color);
+  color: white;
+  line-height: 1.75;
+  margin: 10px 0;
+  border: none;
+  font-size: 1.2em;
+  border-radius: 4px;
+}
+
+.radio-button-container {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-row-gap: 10px;
+}
+
+.radio-button {
+  align-self: center;
 }
