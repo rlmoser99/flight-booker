@@ -1,10 +1,11 @@
-<h1>Flight Index</h1>
+<div class="flight-search">
+  <%= render partial: 'search_form' %>
 
-<%= render partial: 'search_form' %>
+  <% if @booking_options %>
+    <div class="flight-results">
+      <h2>Available Flights:</h2>
+      <%= render partial: 'results_selection_form' %>
+    </div>
+  <% end %>
+</div>
 
-<% if @booking_options %>
-  <div class="flight-results">
-    <h2>Available Flights:</h2>
-    <%= render partial: 'results_selection_form' %>
-  </div>
-<% end %>

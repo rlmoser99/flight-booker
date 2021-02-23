@@ -13,3 +13,30 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  align-items: flex-start;
+  background-attachment:fixed;
+  background-color: #2a2a72;
+  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+  color: #333;
+  display: flex;
+  font-family: Helvetica, sans-serif;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  padding: 15px;
+  > * { flex: 0 1 auto; }
+}
+
+main {
+  background-color: #f1f1f1;
+  border-radius: 15px;
+  height: auto;
+  padding-top: 15px;
+  width: 75%;
+}
