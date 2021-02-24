@@ -6,6 +6,15 @@
   padding: 30px;
 }
 
+.results-summary {
+  margin-top: 30px;
+}
+
+.booking-results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 @media (min-width: 600px) {
   .passenger-container {
     display: flex;
@@ -13,7 +22,31 @@
     > * { flex: 1 1 auto; }
   }
 
+  .passenger-container :first-child {
+    margin-right: 15px;
+  }
+
   .booking-container .form-button {
     margin: 0 auto;
+  }
+
+  .flight-details, .passenger-details {
+    margin: 0 30px;
+  }
+}
+
+@media (min-width: 900px) {
+  .booking-container  {
+    padding: 60px;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  .booking-container .form-button input {
+    margin-top: 20px;
+  }
+
+  .booking-results {
+    display: flex;
   }
 }

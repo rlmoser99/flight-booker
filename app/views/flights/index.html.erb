@@ -2,9 +2,11 @@
   <%= render partial: 'search_form' %>
 
   <div class="flight-results">
-    <p><strong>Available Flights:</strong></p>
     <% if @booking_options %>
+      <p class="sub-title">Available Flights:</p>
       <%= render partial: 'results_selection_form' %>
+    <% else %>
+      <p class="results-placeholder">Choose flight options to see the available flights.</p>
     <% end %>
   </div>
 </div>

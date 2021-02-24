@@ -24,9 +24,22 @@ class Flight < ApplicationRecord
   has_many :bookings, through: :seats
   has_many :passengers, through: :bookings
 
+  # REMOVE DUPLICATE INFO HERE
   def details
     depart = departure_time.strftime('%l:%M %p')
     arrive = (departure_time + (duration.to_f / 60).hours).strftime('%l:%M %p')
     "#{depart} departure from #{origin_airport.code} and arrive at #{arrive} to #{destination_airport.code}"
+  end
+
+  def humanize_arrival
+    (departure_time + (duration.to_f / 60).hours).strftime('%l:%M %p')
+  end
+
+  def estimated_departure_time
+    departure_time.strftime('%l:%M %p')
+  end
+
+  def humanize_date
+    departure_date.strftime("%A, %B %d, %Y")
   end
 end

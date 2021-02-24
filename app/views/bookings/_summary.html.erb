@@ -1,0 +1,13 @@
+<div class="results-summary">
+  <p>
+    <strong>Departure:</strong>
+    <%= flight.estimated_departure_time %>
+    from <%= flight.origin_airport.code %> (<%= flight.origin_airport.location %>)
+    
+  </p>
+  <p>
+    <strong>Arrival:</strong>
+    <%= flight.humanize_arrival %>
+    to <%= flight.destination_airport.code %> (<%= flight.destination_airport.location %>)
+  </p>
+</div>

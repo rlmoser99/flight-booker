@@ -57,7 +57,7 @@ main {
   height: auto;
   margin: 30px;
   padding-top: 15px;
-  max-width: 900px;
+  max-width: 1024px;
 }
 
 .flash-message {
@@ -74,9 +74,27 @@ main {
   background-color: #ce0000;
 }
 
+p {
+  margin: 15px 0;
+}
+
+p.sub-title {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
 @media (min-width: 600px) {
   main {
-    margin: 60px;
+    margin: 30px;
     padding-top: 30px;
   }
 }
+
+@media (min-width: 900px) {
+  main {
+    margin: 60px;
+  }
+}
+
+// Booking Show page into two columns
+// Change wording on submit booking on booking new page
