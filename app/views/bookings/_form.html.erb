@@ -16,18 +16,20 @@
   <%= f.hidden_field :passenger_count, :value => params[:passenger_count] %>
 
   <%= f.fields_for :passengers do |passenger_form| %>
-    <div class="form-field">
-      <%= passenger_form.label :name %><br />
-      <%= passenger_form.text_field :name,
-                        required: true,
-                        placeholder: "Jane Doe" %>
-    </div>
+    <div class="passenger-container">
+      <div class="form-field">
+        <%= passenger_form.label :name %><br />
+        <%= passenger_form.text_field :name,
+                          required: true,
+                          placeholder: "Jane Doe" %>
+      </div>
 
-    <div class="form-field">
-      <%= passenger_form.label :email %><br />
-      <%= passenger_form.text_field :email,
-                        required: true,
-                        placeholder: "user@example.com" %>
+      <div class="form-field">
+        <%= passenger_form.label :email %><br />
+        <%= passenger_form.text_field :email,
+                          required: true,
+                          placeholder: "user@example.com" %>
+      </div>
     </div>
   <% end %>
 

@@ -14,7 +14,7 @@
   </div>
 
   <div class="form-field">
-    <%= f.label "Number of Passengers" %><br />
+    <%= f.label "Passengers" %><br />
     <%= f.select(:passenger_count,
                  options_for_select([1, 2, 3, 4], params[:passenger_count]),
                  required: true ) %>

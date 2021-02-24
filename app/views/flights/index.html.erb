@@ -1,11 +1,11 @@
 <div class="flight-container">
   <%= render partial: 'search_form' %>
 
-  <% if @booking_options %>
-    <div class="flight-results">
-      <p><strong>Available Flights:</strong></p>
+  <div class="flight-results">
+    <p><strong>Available Flights:</strong></p>
+    <% if @booking_options %>
       <%= render partial: 'results_selection_form' %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 

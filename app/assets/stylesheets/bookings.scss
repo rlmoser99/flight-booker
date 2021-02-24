@@ -5,3 +5,15 @@
 .booking-container {
   padding: 30px;
 }
+
+@media (min-width: 600px) {
+  .passenger-container {
+    display: flex;
+    flex-direction: row;
+    > * { flex: 1 1 auto; }
+  }
+
+  .booking-container .form-button {
+    margin: 0 auto;
+  }
+}

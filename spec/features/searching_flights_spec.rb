@@ -28,7 +28,7 @@ RSpec.feature "Users can search flights" do
     select(2, from: "passenger_count")
     fill_in("departure_date", with: Time.zone.tomorrow)
     click_on("Find Flights")
-    within(".flash-alert") do
+    within(".flash-message") do
       expect(page).to have_content("Please choose two different origin and destination locations!")
     end
   end

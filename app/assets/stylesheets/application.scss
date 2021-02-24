@@ -52,18 +52,18 @@ body {
 }
 
 main {
-  background-color: #f1f1f1;
+  background-color: #e4e4e4;
   border-radius: 10px;
   height: auto;
+  margin: 30px;
   padding-top: 15px;
-  margin: 15px 0;
-  width: 75%;
+  max-width: 900px;
 }
 
 .flash-message {
-  width: 100%;
-  text-align: center;
   color: white;
+  text-align: center;
+  width: 100%;
 }
 
 .notice {
@@ -72,4 +72,11 @@ main {
 
 .alert {
   background-color: #ce0000;
+}
+
+@media (min-width: 600px) {
+  main {
+    margin: 60px;
+    padding-top: 30px;
+  }
 }
