@@ -16,6 +16,7 @@
 
 :root {
   --dark-blue: #0047AB;
+  --dark-red: #ce0000;
   --font-family: Helvetica, sans-serif;
   --default-spacing: 15px;
   --medium-spacing: 30px;
@@ -76,7 +77,7 @@ main {
 }
 
 .alert {
-  background-color: #ce0000;
+  background-color: var(--dark-red);
 }
 
 p {
@@ -86,6 +87,10 @@ p {
 p.sub-title {
   font-size: 1.2em;
   font-weight: 600;
+}
+
+.error-content {
+  color: var(--dark-red);
 }
 
 @media (min-width: 425px) {
@@ -108,7 +113,3 @@ p.sub-title {
     padding: var(--large-spacing);
   }
 }
-
-// Change wording on submit booking on booking new page
-// styles for form errors
-// Page Names like "Your Booking: Origin - Destination"

@@ -12,7 +12,7 @@ RSpec.feature "Users can create passengers" do
     visit "/bookings/new/?passenger_count=1&booking_option=1&commit=Book+Flight"
     fill_in("booking_passengers_attributes_0_name", with: "Example Name")
     fill_in("booking_passengers_attributes_0_email", with: "name@example.com")
-    click_on("Submit Booking")
+    click_on("Finalize Booking")
     within(".content-container") do
       expect(page).to have_content("Example Name")
       expect(page).to have_content("NYC")
@@ -23,7 +23,7 @@ RSpec.feature "Users can create passengers" do
     visit "/bookings/new/?passenger_count=1&booking_option=1&commit=Book+Flight"
     fill_in("booking_passengers_attributes_0_name", with: "short")
     fill_in("booking_passengers_attributes_0_email", with: "short.com")
-    click_on("Submit Booking")
+    click_on("Finalize Booking")
     within("form") do
       expect(page).to have_content("Passengers name is too short")
       expect(page).to have_content("Passengers email is too short")

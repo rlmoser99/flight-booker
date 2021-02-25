@@ -28,7 +28,7 @@ RSpec.describe "add booking", type: :system do
     fill_in("booking_passengers_attributes_0_email", with: "one@example.com")
     fill_in("booking_passengers_attributes_1_name", with: "Example Two")
     fill_in("booking_passengers_attributes_1_email", with: "two@example.com")
-    click_on("Submit Booking")
+    click_on("Finalize Booking")
     within(".content-container") do
       expect(page).to have_content("Example One")
       expect(page).to have_content("Example Two")

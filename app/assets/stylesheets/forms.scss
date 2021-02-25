@@ -27,6 +27,11 @@ form {
   width: 100%;
 }
 
+.form-button input:hover {
+  box-shadow: 3px 3px var(--dark-blue);
+  background-color:  #0098f0;
+}
+
 .radio-button-container {
   display: grid;
   grid-row-gap: var(--default-spacing);

@@ -15,7 +15,9 @@
       <%= render partial: 'layouts/flash' %>
     <% end %>
     <main>
-      <%= image_tag('flight-booker-logo.png', height: 'auto', width: '100%') %>
+      <%= link_to root_path do %>
+        <%= image_tag('flight-booker-logo.png', height: 'auto', width: '100%') %>
+      <% end %>
       <div class="content-container">
         <%= yield %>
       </div>
