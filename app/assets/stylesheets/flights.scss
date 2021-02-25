@@ -5,15 +5,14 @@
 .flight-container {
   display: flex;
   flex-direction: column;
-  padding: 30px;
   > * { flex: 0 1 auto; }
 }
 
 .flight-results {
   background-color: white;
   border-radius: 10px;
-  padding: 15px 30px;
-  margin-top: 30px;
+  margin-top: var(--medium-spacing);
+  padding: 0 15px;
 }
 
 p.results-placeholder {
@@ -22,6 +21,12 @@ p.results-placeholder {
 
 .flight-results .form-button input {
   margin: 30px 0 15px;
+}
+
+@media (min-width: 425px) {
+  .flight-results {
+    padding: 15px 30px;
+  }
 }
 
 @media (min-width: 600px) {
@@ -36,10 +41,6 @@ p.results-placeholder {
 }
 
 @media (min-width: 900px) {
-  .flight-container {
-    padding: 60px;
-  }
-
   .flight-results {
     margin: 18px 0 0 60px;
     padding: 30px 45px;

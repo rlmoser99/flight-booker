@@ -1,6 +1,6 @@
-<div class="booking-container">
+<div class="new-booking-container">
   <p class="sub-title">
-    <%= pluralize(@flights.count, "Flight") %> on <%= @flights.first.humanize_date %>:
+    <%= pluralize(@flights.count, "Flight") %>:
   </p>
   <% @flights.each do |flight| %>
     <%= render partial: 'summary', locals: { flight: flight } %>

@@ -2,6 +2,7 @@
   <p>
     <strong>Departure:</strong>
     <%= flight.estimated_departure_time %>
+    on <%= flight.humanize_date %>
     from <%= flight.origin_airport.code %> (<%= flight.origin_airport.location %>)
     
   </p>

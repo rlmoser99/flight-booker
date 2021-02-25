@@ -5,18 +5,18 @@ form {
 }
 
 .form-field {
-  padding-bottom: 15px;
+  padding-bottom: var(--default-spacing);
 }
 
 .form-field select,
 .form-field input {
-  font-family: var(--main-font-family);
+  font-family: var(--font-family);
   padding: 3px;
   width: 100%;
 }
 
 .form-button input {
-  background-color: var(--main-dark-blue-color);
+  background-color: var(--dark-blue);
   border: none;
   border-radius: 4px;
   color: white;
@@ -29,7 +29,7 @@ form {
 
 .radio-button-container {
   display: grid;
-  grid-row-gap: 10px;
+  grid-row-gap: var(--default-spacing);
   grid-template-columns: 30px 1fr;
 }
 
@@ -38,7 +38,7 @@ form {
 }
 
 @media (min-width: 600px) {
-  .flight-results .form-button {
+  .form-button {
     margin: 0 auto;
   }
 }

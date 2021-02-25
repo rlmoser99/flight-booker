@@ -16,7 +16,9 @@
     <% end %>
     <main>
       <%= image_tag('flight-booker-logo.png', height: 'auto', width: '100%') %>
-      <%= yield %>
+      <div class="content-container">
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

@@ -2,51 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.booking-container {
-  padding: 30px;
-}
-
-.results-summary {
-  margin-top: 30px;
-}
-
-.booking-results {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 @media (min-width: 600px) {
-  .passenger-container {
+  .new-passenger-container {
     display: flex;
     flex-direction: row;
     > * { flex: 1 1 auto; }
   }
 
-  .passenger-container :first-child {
-    margin-right: 15px;
+  .new-passenger-container :first-child {
+    margin-right: var(--medium-spacing);
   }
 
-  .booking-container .form-button {
-    margin: 0 auto;
+  .booking-section-container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
   }
 
-  .flight-details, .passenger-details {
-    margin: 0 30px;
-  }
-}
-
-@media (min-width: 900px) {
-  .booking-container  {
-    padding: 60px;
-    max-width: 768px;
-    margin: 0 auto;
-  }
-
-  .booking-container .form-button input {
-    margin-top: 20px;
-  }
-
-  .booking-results {
-    display: flex;
+  // Offset the difference of 1.2em font in the section heading
+  .booking-section-summary {
+    margin-top: 4px;
   }
 }

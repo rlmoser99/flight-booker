@@ -40,6 +40,6 @@ class Flight < ApplicationRecord
   end
 
   def humanize_date
-    departure_date.strftime("%A, %B %d, %Y")
+    departure_date.strftime("%B %d, %Y")
   end
 end

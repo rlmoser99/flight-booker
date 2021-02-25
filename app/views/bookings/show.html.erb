@@ -1,24 +1,27 @@
-<div class="booking-container">
-  <div class="booking-results">
-    <div class="passenger-details">
-      <p class="sub-title">
-        <%= pluralize(@booking.passengers.count, "Passenger") %>:
+<div class="booking-section-container">
+  <div class="booking-section-title">
+    <p class="sub-title">
+      <%= pluralize(@booking.passengers.count, "Passenger") %>:
+    </p>
+  </div>
+  <div class="booking-section-summary">
+    <% @booking.passengers.each do |passenger| %>
+      <p>
+        <%= passenger.name %>
       </p>
-      <div class="results-summary">
-        <% @booking.passengers.each do |passenger| %>
-          <p>
-            <%= passenger.name %>
-          </p>
-        <% end %>
-      </div>
-    </div>
-    <div class="flight-details">
+    <% end %>
+  </div>
+</div>
+<br />
+<div class="booking-section-container">
+  <div class="booking-section-title">
     <p class="sub-title">
       <%= pluralize(@booking.flights.distinct.count, "Flight") %>:
     </p>
+  </div>
+  <div class="booking-section-summary">
     <% @booking.flights.distinct.each do |flight| %>
       <%= render partial: 'summary', locals: { flight: flight } %>
     <% end %>
-    </div>
   </div>
 </div>

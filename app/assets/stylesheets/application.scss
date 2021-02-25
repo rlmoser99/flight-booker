@@ -15,18 +15,21 @@
  */
 
 :root {
-  --main-dark-blue-color: #0047AB;
-  --main-font-family: Helvetica, sans-serif;
+  --dark-blue: #0047AB;
+  --font-family: Helvetica, sans-serif;
+  --default-spacing: 15px;
+  --medium-spacing: 30px;
+  --large-spacing: 60px;
 }
 
 html {
-  margin: 0;
-  padding: 0;
-  height: -webkit-fill-available;
-  width: 100vw;
-  font-size: 16px;
-  overflow-x: hidden;
   box-sizing: border-box;
+  font-size: 16px;
+  height: -webkit-fill-available;
+  margin: 0;
+  overflow-x: hidden;
+  padding: 0;
+  width: 100vw;
 }
 
 *,
@@ -37,14 +40,13 @@ html {
 
 body {
   align-items: center;
-  background-attachment:fixed;
+  background-attachment: fixed;
   background-color: #2a2a72;
   background-image: linear-gradient(315deg, #2a2a72 0%, #0098f0 74%);
   color: #333;
   display: flex;
   flex-direction: column;
-  font-family: var(--main-font-family);
-  justify-content: flex-start;
+  font-family: var(--font-family);
   margin: 0;
   min-height: 100vh;
   min-height: -webkit-fill-available;
@@ -54,10 +56,13 @@ body {
 main {
   background-color: #e4e4e4;
   border-radius: 10px;
-  height: auto;
-  margin: 30px;
-  padding-top: 15px;
-  max-width: 1024px;
+  margin: var(--default-spacing);
+  padding-top: var(--default-spacing);
+  max-width: 960px;
+}
+
+.content-container {
+  padding: var(--default-spacing);
 }
 
 .flash-message {
@@ -67,7 +72,7 @@ main {
 }
 
 .notice {
-  background-color: var(--main-dark-blue-color);
+  background-color: var(--dark-blue);
 }
 
 .alert {
@@ -83,18 +88,27 @@ p.sub-title {
   font-weight: 600;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 425px) {
   main {
-    margin: 30px;
-    padding-top: 30px;
+    margin: var(--medium-spacing);
+    padding-top: var(--medium-spacing);
+  }
+
+  .content-container {
+    padding: var(--medium-spacing);
   }
 }
 
 @media (min-width: 900px) {
   main {
-    margin: 60px;
+    margin: var(--large-spacing);
+  }
+
+  .content-container {
+    padding: var(--large-spacing);
   }
 }
 
-// Booking Show page into two columns
 // Change wording on submit booking on booking new page
+// styles for form errors
+// Page Names like "Your Booking: Origin - Destination"

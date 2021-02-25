@@ -13,7 +13,7 @@ RSpec.feature "Users can create passengers" do
     fill_in("booking_passengers_attributes_0_name", with: "Example Name")
     fill_in("booking_passengers_attributes_0_email", with: "name@example.com")
     click_on("Submit Booking")
-    within(".booking-results") do
+    within(".content-container") do
       expect(page).to have_content("Example Name")
       expect(page).to have_content("NYC")
     end
