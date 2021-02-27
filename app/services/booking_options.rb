@@ -9,7 +9,7 @@ class BookingOptions
 
   def find_flights
     direct_flights = find_flight_options(@origin, @destination, @date).collect { |flight| [flight] }
-    return direct_flights if layover_location? || direct_flight_locations?
+    return direct_flights if under_four_hours?(direct_flights)
 
     direct_flights + find_connecting_flights
   end
@@ -49,23 +49,12 @@ class BookingOptions
                      "departure_date" => date })
     end
 
-    def layover_location?
-      layover_codes.include?(@origin.code) || layover_codes.include?(@destination.code)
+    def under_four_hours?(direct_flights)
+      direct_flights.flatten.any? { |flight| flight.duration < 240 }
     end
 
     # Airport ID's for Atlanta, Chicago, Dallas, and Denver
     def layover_codes
       %w[ATL ORD DFW DEN]
-    end
-
-    def direct_flight_locations?
-      direct_flight_codes.any? { |pair| pair == [@origin.code, @destination.code] }
-    end
-
-    # Flights to & from San Francisco/Los Angeles and New York City/Orlando
-    def direct_flight_codes
-      [
-        %w[SFO LAX], %w[LAX SFO], %w[NYC MCO], %w[MCO NYC]
-      ]
     end
 end

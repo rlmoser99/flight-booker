@@ -8,30 +8,28 @@ RSpec.describe BookingOptions do
   let(:atlanta) { create(:airport, :atlanta) }
   let(:chicago) { create(:airport, :chicago) }
 
-  # 2 direct flights SFO to NYC
-  let(:morning_SFO_NYC) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: new_york) }
-  let(:night_SFO_NYC) { create(:tomorrow_night_flight, origin_airport: san_fran, destination_airport: new_york) }
+  # 2 long direct flights SFO to NYC
+  let(:morning_SFO_NYC) { create(:tomorrow_morning_long_flight, origin_id: san_fran.id, destination_id: new_york.id) }
+  let(:night_SFO_NYC) { create(:tomorrow_night_long_flight, origin_id: san_fran.id, destination_id: new_york.id) }
 
   # Connecting flight pair through ORD
-  let(:morning_SFO_ORD) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: chicago) }
-  let(:layover_ORD_NYC) { create(:tomorrow_layover_flight, origin_airport: chicago, destination_airport: new_york) }
+  let(:morning_SFO_ORD) { create(:tomorrow_morning_flight, origin_id: san_fran.id, destination_id: chicago.id) }
+  let(:layover_ORD_NYC) { create(:tomorrow_layover_flight, origin_id: chicago.id, destination_id: new_york.id) }
 
   # Connecting flight pair through ATL
-  let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: atlanta) }
-  let(:layover_ATL_NYC) { create(:tomorrow_layover_flight, origin_airport: atlanta, destination_airport: new_york) }
+  let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_id: san_fran.id, destination_id: atlanta.id) }
+  let(:layover_ATL_NYC) { create(:tomorrow_layover_flight, origin_id: atlanta.id, destination_id: new_york.id) }
 
   # Second leg option that will not be used for connecting through ATL
-  let(:night_ATL_NYC) { create(:tomorrow_night_flight, origin_airport: atlanta, destination_airport: new_york) }
+  let(:night_ATL_NYC) { create(:tomorrow_night_flight, origin_id: atlanta.id, destination_id: new_york.id) }
 
   let(:tomorrow) { Time.zone.tomorrow }
 
   describe "#find_flights" do
     context 'when flying between two cross-country locations' do
-      let(:san_fran_id) { 1 }
-      let(:new_york_id) { 2 }
       let(:cross_country_locations) do
-        BookingOptions.new({ "origin_id" => san_fran_id,
-                             "destination_id" => new_york_id,
+        BookingOptions.new({ "origin_id" => san_fran.id,
+                             "destination_id" => new_york.id,
                              "departure_date" => tomorrow })
       end
 
@@ -57,17 +55,15 @@ RSpec.describe BookingOptions do
 
     context 'when flying to/from a layover location' do
       # 1 more direct flight SFO to ORD
-      let(:night_SFO_ORD) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: chicago) }
+      let(:night_SFO_ORD) { create(:tomorrow_morning_short_flight, origin_id: san_fran.id, destination_id: chicago.id) }
 
       # Unnecessary connecting flight pair through ATL (that will not be used)
-      let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: atlanta) }
-      let(:layover_ATL_ORD) { create(:tomorrow_layover_flight, origin_airport: atlanta, destination_airport: chicago) }
+      let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_id: san_fran.id, destination_id: atlanta.id) }
+      let(:layover_ATL_ORD) { create(:tomorrow_layover_flight, origin_id: atlanta.id, destination_id: chicago.id) }
 
-      let(:san_fran_id) { 1 }
-      let(:chicago_id) { 4 }
       let(:one_layover_location) do
-        BookingOptions.new({ "origin_id" => san_fran_id,
-                             "destination_id" => chicago_id,
+        BookingOptions.new({ "origin_id" => san_fran.id,
+                             "destination_id" => chicago.id,
                              "departure_date" => tomorrow })
       end
 
@@ -94,18 +90,16 @@ RSpec.describe BookingOptions do
       let(:los_angeles) { create(:airport, :los_angeles) }
 
       # 2 direct flights SFO to LAX
-      let(:morning_SFO_LAX) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: los_angeles) }
-      let(:night_SFO_LAX) { create(:tomorrow_night_flight, origin_airport: san_fran, destination_airport: los_angeles) }
+      let(:morning_SFO_LAX) { create(:tomorrow_morning_short_flight, origin_id: san_fran.id, destination_id: los_angeles.id) }
+      let(:night_SFO_LAX) { create(:tomorrow_night_short_flight, origin_id: san_fran.id, destination_id: los_angeles.id) }
 
       # Unnecessary connecting flight pair through ATL (that will not be used)
-      let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_airport: san_fran, destination_airport: atlanta) }
-      let(:layover_ATL_LAX) { create(:tomorrow_layover_flight, origin_airport: atlanta, destination_airport: los_angeles) }
+      let(:morning_SFO_ATL) { create(:tomorrow_morning_flight, origin_id: san_fran.id, destination_id: atlanta.id) }
+      let(:layover_ATL_LAX) { create(:tomorrow_layover_flight, origin_id: atlanta.id, destination_id: los_angeles.id) }
 
-      let(:san_fran_id) { 1 }
-      let(:los_angeles_id) { 5 }
       let(:close_locations) do
-        BookingOptions.new({ "origin_id" => san_fran_id,
-                             "destination_id" => los_angeles_id,
+        BookingOptions.new({ "origin_id" => san_fran.id,
+                             "destination_id" => los_angeles.id,
                              "departure_date" => tomorrow })
       end
 
