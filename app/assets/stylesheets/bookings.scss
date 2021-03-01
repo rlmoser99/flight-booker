@@ -7,10 +7,9 @@
     display: flex;
     flex-direction: row;
     > * { flex: 1 1 auto; }
-  }
-
-  .new-passenger-container :first-child {
-    margin-right: var(--medium-spacing);
+    :first-child {
+      margin-right: var(--medium-spacing);
+    }
   }
 
   .booking-section-container {
@@ -18,8 +17,10 @@
     grid-template-columns: 150px 1fr;
   }
 
-  // Offset the difference of 1.2em font in the section heading
   .booking-section-summary {
-    margin-top: 4px;
+    margin-top: 4px; // offset the difference of 1.2em font in the section heading
+    p {
+      margin-top: 0;
+    }
   }
 }

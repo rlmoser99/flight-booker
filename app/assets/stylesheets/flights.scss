@@ -20,12 +20,12 @@ p.results-placeholder {
 }
 
 .flight-results .form-button input {
-  margin: 30px 0 15px;
+  margin-top: var(--medium-spacing);
 }
 
 @media (min-width: 425px) {
   .flight-results {
-    padding: 15px 30px;
+    padding: var(--medium-spacing);
   }
 }
 
