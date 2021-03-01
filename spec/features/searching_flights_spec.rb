@@ -32,4 +32,17 @@ RSpec.feature "Users can search flights" do
       expect(page).to have_content("Please choose two different origin and destination locations!")
     end
   end
+
+  scenario "with no available flights today" do
+    visit "/"
+    select("Chicago, IL", from: "origin_id")
+    select("New York City, NY", from: "destination_id")
+    select(2, from: "passenger_count")
+    fill_in("departure_date", with: Time.zone.today)
+    click_on("Find Flights")
+    within(".flight-results") do
+      expect(page).to have_content("Sorry, no flights match your search criteria.")
+      expect(page).not_to have_content("Book Flight")
+    end
+  end
 end

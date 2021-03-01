@@ -20,7 +20,11 @@
     <% end %>
   </div>
 
-  <div class="form-button">
-    <%= f.submit "Book Flight" %>
-  </div>
+  <% if @booking_options.empty? %>
+    <p>Sorry, no flights match your search criteria.</p>
+  <% else %>
+    <div class="form-button">
+      <%= f.submit "Book Flight" %>
+    </div>
+  <% end %>
 <% end %>
