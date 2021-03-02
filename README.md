@@ -20,31 +20,25 @@ On the same page as the search, users select the flight that they would like to 
 **User Enters Passenger Information:** 
 User enter the passenger information to finalize their booking. This feature required `Bookings` to accept nested attributes for `Passengers`. 
 
-**RSpec Tests (EXTRA):** 
-The current Ruby on Rails curriculum does not cover testing, so I decided there was no better time to learn testing on my own. After trying several other resources, I read [Rails 5 Test Prescriptions](https://pragprog.com/titles/nrtest3/rails-5-test-prescriptions/). Although the book is slightly outdated, it was very thorough and gave me the foundational knowledge that I was seeking.
+**(Additional) RSpec Tests:** 
+The current Ruby on Rails curriculum does not cover testing, so I decided to learn testing before tackling this project. After trying several other resources, I read [Rails 5 Test Prescriptions](https://pragprog.com/titles/nrtest3/rails-5-test-prescriptions/). Although the book is slightly outdated, it was very thorough and gave me the foundational knowledge that I was seeking.
 
-**Layover Flights (EXTRA):** 
-After finishing the bare bones of this project, I wanted to see if I could use two connecting flights between the locations. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `booking_options`, to find the available flights. If a direct flight was less then 4 hours long, it would only return direct flights. However, if a direct flight was over 4 hours long, it would look for connecting flights. I developed this service object using TDD, so it was a great way to utilize my new testing knowledge.
+**(Additional) Layover Flights:** 
+After finishing the bare bones of this project, I wanted to see if I could implement two connecting flights. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `booking_options`, to find the available flights. If a direct flight was less then 4 hours long, it would only return direct flights. However, if a direct flight was over 4 hours long, it would also look for connecting flights. I used TDD to develop this feature, so it was perfect timing to utilize my new testing knowledge.
 
-**Styles (EXTRA):** 
-Styling this project was not required. I decided to use vanilla CSS, instead of using a framework like I had in the past. It is responsive, using a combination of media queries, flexbox, and grid. 
+**(Additional) Styling:** 
+Although styling this project is not required, I wanted to add styling as a finishing touch. I decided to use vanilla CSS, instead of using a framework like I had in the past. I had the basic idea of using an light-colored inner area, with a darker "sky-like" gradient background. As I created this basic layout, I remembered the logo from [Catch Me If You Can](https://www.imdb.com/title/tt0264464/) and was inspired to create a logo using [Affinity Designer](https://affinity.serif.com/en-us/designer/). This web app is responsive, using a combination of media queries and flexbox. 
 
-## How to Play
-This chess game will look slightly different on other command line interfaces (CLI), such as repl.it or your computer. Not only will the colors vary, but the font size of my CLI is 24 points to increase the size of the unicode chess pieces.
-
-### Play Online
-If you want to play this chess game without installing it on your computer, you can play it [online](https://repl.it/@rlmoser/rubychess#README.md). Just click the `run` button at the top of the page. It will take a few seconds to load the dependencies and then the game menu will appear.
-
-### Installation
+## Local Installation
 - Clone this repo ([instructions](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository))
 - Navigate into this project's directory `cd flight_booker`
 - Install the required gems, by running `bundle install`
 - Migrate the database, by running `rails db:migrate`
 - Seed the database, by running `rails db:seed`
 - Start the local server, by running `rails server`
-- Open a web browser and enter `localhost:3000` as the address
+- View `localhost:3000` in a web browser
 
-## Running the tests
+### Running the tests
 - To run the entire test suite, run `rspec`
 - You can specify one spec folder to run a group tests, such as `rspec spec/features` 
 - You can specify one spec file to run the a single set of tests, such as `rspec spec/models/flight_spec.rb` 
