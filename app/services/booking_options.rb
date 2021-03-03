@@ -11,7 +11,7 @@ class BookingOptions
     direct_flights = find_flight_options(@origin, @destination, @date).collect { |flight| [flight] }
     return direct_flights if under_four_hours?(direct_flights)
 
-    direct_flights + find_connecting_flights
+    direct_flights + find_connecting_flights.sort_by { |flight| flight[0].departure_time }
   end
 
   private
