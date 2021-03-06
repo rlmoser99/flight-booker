@@ -6,7 +6,7 @@ This is a project from the **Advanced Forms and Active Record** section in [The 
 Add gif
 
 ## Live Project
-Add link to heroku
+You can view this [web app](https://rlm-flight-booker.herokuapp.com/) on Heroku. The heroku server will need a little bit of time to fire up a dyno, so please be patient with this free service.
 
 ## Project Requirements
 This project is a fairly simple and straighforward app where a user books a 1-way flight. The focus of this project is getting more comfortable with Active Record and more advanced forms. It does not require any user authentication or authorization. 
@@ -24,7 +24,10 @@ Users enter passenger information to finalize their booking. This feature requir
 The current Ruby on Rails curriculum does not cover testing, so I decided to learn testing before tackling this project. After trying several other resources, I read [Rails 5 Test Prescriptions](https://pragprog.com/titles/nrtest3/rails-5-test-prescriptions/). Although the book is slightly outdated, it was very thorough and gave me the foundational knowledge that I was seeking.
 
 **(Additional) 2 Connecting Flights:** 
-After finishing the bare bones of this project, I wanted to see if I could implement two connecting flights. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `booking_options`, to find the available flights. If a direct flight was less then 4 hours long, it would only return direct flights. However, if a direct flight was over 4 hours long, it would also look for connecting flights. I used TDD to develop this feature, so it was perfect timing to utilize my new testing knowledge.
+After finishing the bare bones of this project, I wanted to see if I could implement two connecting flights. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `BookingOptions`, to find the available flights. If a direct flight was less then 4 hours long, it would only return direct flights. However, if a direct flight was over 4 hours long, it would also look for connecting flights. I used TDD to develop this feature, so it was perfect timing to utilize my new testing knowledge.
+
+**(Additional) Rake Tasks:** 
+As I was wrapping up this project, I wanted to figure out a way to continually seed the database with flights in the future. The Odin Project's students look at other student's solutions, so I didn't want to this app to quit working in a month, three months, or even a year. I learned that I could create rake tasks and use [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler). In addition, I created another service object, `FlightGenerator`, that will be used by the seeds file and the rake task to generate flights.
 
 **(Additional) Styling:** 
 Although styling this project is not required, I wanted to add styling as a finishing touch. I decided to use vanilla CSS, instead of using a framework like I had in the past. I had the basic idea of using an light-colored inner area, with a darker "sky-like" gradient background. As I created this basic layout, I remembered the logo from [Catch Me If You Can](https://www.imdb.com/title/tt0264464/) and was inspired to create a similar logo using [Affinity Designer](https://affinity.serif.com/en-us/designer/). This web app is responsive, using a combination of media queries and flexbox. 
