@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+SimpleCov.start 'rails'
 require "active_record"
 require "bullet"
 
