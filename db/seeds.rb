@@ -29,14 +29,14 @@ def find_flight_duration(airports)
 end
 
 airports = [
-  Airport.create!(code: "SFO", location: "San Francisco, CA"),
-  Airport.create!(code: "NYC", location: "New York City, NY"),
-  Airport.create!(code: "ATL", location: "Atlanta, GA"),
-  Airport.create!(code: "ORD", location: "Chicago, IL"),
-  Airport.create!(code: "LAX", location: "Los Angeles, CA"),
-  Airport.create!(code: "DFW", location: "Dallas, TX"),
-  Airport.create!(code: "MCO", location: "Orlando, FL"),
-  Airport.create!(code: "DEN", location: "Denver, CO")
+  Airport.find_or_create_by(code: "SFO", location: "San Francisco, CA"),
+  Airport.find_or_create_by(code: "NYC", location: "New York City, NY"),
+  Airport.find_or_create_by(code: "ATL", location: "Atlanta, GA"),
+  Airport.find_or_create_by(code: "ORD", location: "Chicago, IL"),
+  Airport.find_or_create_by(code: "LAX", location: "Los Angeles, CA"),
+  Airport.find_or_create_by(code: "DFW", location: "Dallas, TX"),
+  Airport.find_or_create_by(code: "MCO", location: "Orlando, FL"),
+  Airport.find_or_create_by(code: "DEN", location: "Denver, CO")
 ]
 
 airport_pairs = airports.permutation(2)
@@ -48,34 +48,22 @@ finish = Time.zone.today + 1.week
     flight_codes = airport_pair.map(&:code)
     flight_duration = find_flight_duration(flight_codes)
 
-    Flight.create!(origin_airport: airport_pair[0],
-                   destination_airport: airport_pair[1],
-                   departure_date: date,
-                   departure_time: morning_time,
-                   duration: flight_duration)
+    Flight.find_or_create_by(origin_airport: airport_pair[0],
+                             destination_airport: airport_pair[1],
+                             departure_date: date,
+                             departure_time: morning_time,
+                             duration: flight_duration)
 
-    Flight.create!(origin_airport: airport_pair[0],
-                   destination_airport: airport_pair[1],
-                   departure_date: date,
-                   departure_time: afternoon_time,
-                   duration: flight_duration)
+    Flight.find_or_create_by(origin_airport: airport_pair[0],
+                             destination_airport: airport_pair[1],
+                             departure_date: date,
+                             departure_time: afternoon_time,
+                             duration: flight_duration)
 
-    Flight.create!(origin_airport: airport_pair[0],
-                   destination_airport: airport_pair[1],
-                   departure_date: date,
-                   departure_time: evening_time,
-                   duration: flight_duration)
+    Flight.find_or_create_by(origin_airport: airport_pair[0],
+                             destination_airport: airport_pair[1],
+                             departure_date: date,
+                             departure_time: evening_time,
+                             duration: flight_duration)
   end
 end
-
-earhart_booking = Booking.new
-
-Seat.new(flight: Flight.first, booking: earhart_booking)
-Seat.new(flight: Flight.first, booking: earhart_booking)
-Seat.new(flight: Flight.first, booking: earhart_booking)
-Seat.new(flight: Flight.first, booking: earhart_booking)
-
-Passenger.create!(name: "Amelia Earhart", email: "amelia@earhart.com", booking: earhart_booking)
-Passenger.create!(name: "Maude Bonney", email: "maude@bonney.com", booking: earhart_booking)
-Passenger.create!(name: "Urmila K. Parekh", email: "urmila@parekh.com", booking: earhart_booking)
-Passenger.create!(name: "Hermelinda Urvina", email: "hermelinda@urvina.com", booking: earhart_booking)
