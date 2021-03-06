@@ -52,4 +52,4 @@ Layout/HashAlignment:
 
 Rails/Date:
   Exclude:
-    - db/seeds.rb
+    - app/services/flight_generator.rb
