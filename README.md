@@ -3,7 +3,7 @@
 This is a project from the **Advanced Forms and Active Record** section in [The Odin Project](https://www.theodinproject.com/courses/ruby-on-rails/lessons/building-advanced-forms)'s Ruby on Rails curriculum. 
 
 ## Demo
-Add gif
+<img src="app/assets/images/flight-booker-demo.gif" alt="web app demo" width=auto height="400px"/><br>
 
 ## Live Project
 You can view this [web app](https://rlm-flight-booker.herokuapp.com/) on Heroku. The heroku server will need a little bit of time to fire up a dyno, so please be patient with this free service.
@@ -24,7 +24,7 @@ Users enter passenger information to finalize their booking. This feature requir
 The current Ruby on Rails curriculum does not cover testing, so I decided to learn testing before tackling this project. After trying several other resources, I read [Rails 5 Test Prescriptions](https://pragprog.com/titles/nrtest3/rails-5-test-prescriptions/). Although the book is slightly outdated, it was very thorough and gave me the foundational knowledge that I was seeking.
 
 **(Additional) 2 Connecting Flights:** 
-After finishing the bare bones of this project, I wanted to see if I could implement two connecting flights. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `BookingOptions`, to find the available flights. If a direct flight was less then 4 hours long, it would only return direct flights. However, if a direct flight was over 4 hours long, it would also look for connecting flights. I used TDD to develop this feature, so it was perfect timing to utilize my new testing knowledge.
+After finishing the bare bones of this project, I wanted to see if I could implement two connecting flights for long cross-country flights. This was quite a challenge at my skill level, but it was very rewarding to see it all come together. I created a service object, `BookingOptions`, to find the available flights. If a direct flight is less then 4 hours long, it will only return direct flights. However, if a direct flight is over 4 hours long, it will also look for connecting flights in a specific window of time. I used TDD to develop this feature, so it was perfect timing to utilize my new testing knowledge.
 
 **(Additional) Rake Tasks:** 
 As I was wrapping up this project, I wanted to figure out a way to continually seed the database with flights in the future. The Odin Project's students look at other student's solutions, so I didn't want to this app to quit working in a month, three months, or even a year. I learned that I could create rake tasks and use [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler). In addition, I created another service object, `FlightGenerator`, that will be used by the seeds file and the rake task to generate flights.
