@@ -21,7 +21,7 @@
   </div>
 
   <% if @booking_options.empty? %>
-    <p>Sorry, no flights match your search criteria.</p>
+    <p>Sorry, no flights match your search criteria. Please choose a date within the next 30 days.</p>
   <% else %>
     <div class="form-button">
       <%= f.submit "Book Flight" %>
