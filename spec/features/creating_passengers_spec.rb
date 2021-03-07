@@ -18,15 +18,4 @@ RSpec.feature "Users can create passengers" do
       expect(page).to have_content("NYC")
     end
   end
-
-  scenario "when providing invalid attributes" do
-    visit "/bookings/new/?passenger_count=1&booking_option=1&commit=Book+Flight"
-    fill_in("booking_passengers_attributes_0_name", with: "short")
-    fill_in("booking_passengers_attributes_0_email", with: "short.com")
-    click_on("Finalize Booking")
-    within("form") do
-      expect(page).to have_content("Passengers name is too short")
-      expect(page).to have_content("Passengers email is too short")
-    end
-  end
 end

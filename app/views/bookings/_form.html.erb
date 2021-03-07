@@ -20,15 +20,15 @@
       <div class="form-field">
         <%= passenger_form.label :name %>
         <%= passenger_form.text_field :name,
-                          required: true,
-                          placeholder: "Frank Abagnale Jr." %>
+                                      required: true,
+                                      placeholder: "Frank Abagnale Jr." %>
       </div>
 
       <div class="form-field">
         <%= passenger_form.label :email %>
-        <%= passenger_form.text_field :email,
-                          required: true,
-                          placeholder: "frank@abagnale.com" %>
+        <%= passenger_form.email_field :email,
+                                       required: true,
+                                       placeholder: "frank@abagnale.com" %>
       </div>
     </div>
   <% end %>

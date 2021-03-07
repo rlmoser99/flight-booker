@@ -15,6 +15,6 @@ class Passenger < ApplicationRecord
   belongs_to :booking
   has_many :flights, through: :booking
 
-  validates :name, presence: true, length: { minimum: 6 }
-  validates :email, presence: true, length: { minimum: 12 }
+  validates :name, presence: true
+  validates :email, presence: true
 end
