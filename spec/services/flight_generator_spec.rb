@@ -6,17 +6,19 @@ RSpec.describe FlightGenerator do
   let(:tomorrow) { Time.zone.tomorrow }
   subject(:flight_generator) { described_class.new(tomorrow) }
 
-  Airport.find_or_create_by(code: "SFO", location: "San Francisco, CA")
-  Airport.find_or_create_by(code: "NYC", location: "New York City, NY")
-  Airport.find_or_create_by(code: "ATL", location: "Atlanta, GA")
-  Airport.find_or_create_by(code: "ORD", location: "Chicago, IL")
-  Airport.find_or_create_by(code: "LAX", location: "Los Angeles, CA")
-  Airport.find_or_create_by(code: "DFW", location: "Dallas, TX")
-  Airport.find_or_create_by(code: "MCO", location: "Orlando, FL")
-  Airport.find_or_create_by(code: "DEN", location: "Denver, CO")
-
   describe "#create_flights" do
-    it "returns flight duration" do
+    before do
+      create(:airport, code: "SFO", location: "San Francisco, CA")
+      create(:airport, code: "NYC", location: "New York City, NY")
+      create(:airport, code: "ATL", location: "Atlanta, GA")
+      create(:airport, code: "ORD", location: "Chicago, IL")
+      create(:airport, code: "LAX", location: "Los Angeles, CA")
+      create(:airport, code: "DFW", location: "Dallas, TX")
+      create(:airport, code: "MCO", location: "Orlando, FL")
+      create(:airport, code: "DEN", location: "Denver, CO")
+    end
+
+    it "increases flight count by the daily flight count" do
       airport_pairs = 56
       flights_per_day = 3
       daily_flight_count = airport_pairs * flights_per_day

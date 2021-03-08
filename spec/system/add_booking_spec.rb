@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "add booking", type: :system do
-  let!(:chicago) { create(:airport, :chicago, location: "Chicago, IL") }
-  let!(:new_york) { create(:airport, :new_york_city, location: "New York City, NY") }
-  let!(:atlanta) { create(:airport, :atlanta) }
-
-  let!(:ORD_NYC) { create(:tomorrow_morning_flight, id: 1, origin_airport: chicago, destination_airport: new_york) }
-  let!(:ORD_ATL) { create(:tomorrow_morning_flight, id: 2, origin_airport: chicago, destination_airport: atlanta) }
-
   it "allows a user to search flights, select a booking option, and create a booking" do
+    chicago = create(:airport, :chicago, location: "Chicago, IL")
+    new_york = create(:airport, :new_york_city, location: "New York City, NY")
+    atlanta = create(:airport, :atlanta)
+
+    create(:tomorrow_morning_flight, id: 1, origin_airport: chicago, destination_airport: new_york)
+    create(:tomorrow_morning_flight, id: 2, origin_airport: chicago, destination_airport: atlanta)
+
     visit "/"
     select("Chicago, IL", from: "origin_id")
     select("New York City, NY", from: "destination_id")
