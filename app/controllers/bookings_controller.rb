@@ -14,7 +14,8 @@ class BookingsController < ApplicationController
     create_booking_seats(@flights, params[:booking][:passenger_count].to_i)
 
     if @booking.save
-      flash[:notice] = "Your booking was created!"
+      flash[:notice] = "Please check your email for confirmation information!"
+      PassengerMailer.with(booking: @booking).thank_you_email.deliver_now
       redirect_to @booking
     else
       render :new
