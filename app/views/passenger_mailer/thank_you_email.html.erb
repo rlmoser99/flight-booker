@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1>Your booking is confirmed</h1>
-    <p>
-      Thank you for booking with Flight Booker<br>
-    </p>
-    <%= link_to 'Your Booking', booking_url(@booking) %>
-  </body>
-</html>
+<h1>Flight Booker</h1>
+<p>
+  Thank you for your business. Booking #<%= @booking.id %> is confirmed and includes:
+</p>
+<% @booking.flights.distinct.each do |flight| %>
+  <p class="flight-summary">
+    <%= flight.details %> on <%= flight.humanize_date %>
+  </p>
+<% end %>
+<p>
+  Additional details for <%= link_to 'your booking', booking_url(@booking) %> are available online.
+</p>

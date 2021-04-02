@@ -1,5 +1,11 @@
-Your booking is confirmed!
-===============================================
+Flight Booker
+=============
 
-Thank you for booking with Flight Booker!
-<%= link_to 'Your Booking', booking_url(@booking) %>
+Thank you for your business. Booking #<%= @booking.id %> is confirmed and includes:
+
+<% @booking.flights.distinct.each do |flight| %>
+  <%= flight.details %> on <%= flight.humanize_date %>
+<% end %>
+
+Additional details for your booking are available online:
+https://rlm-flight-booker.herokuapp.com/bookings/<%= @booking.id %>
